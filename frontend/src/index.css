@@ -1,0 +1,68 @@
+:root {
+  /* Cores Primárias */
+  --clr-border: #ccc;
+  --clr-border-flower: #757373;
+  --clr-bg-default: #fff;
+  --clr-bg-hover: #f0f0f0;
+  --clr-text-default: #333;
+  --clr-primary: #cc0000;
+  --clr-secondary: #cc0000;
+
+  /* Espaçamentos e bordas */
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  /* --radius: 2rem; */
+
+  /* Transições */
+  --transition-fast: 0.2s ease-in-out;
+  --transition-medium: 0.3s ease;
+}
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  
+}
+
+body {
+  background-color: #F3F1EE;  
+}
+@font-face {
+  font-family: 'Merchant';
+  /* caminho relativo ao CSS */
+  src: url('/fonts/Dubiel.ttf') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Whyte';
+
+  src: url('/fonts/Whyte-Regular.woff') format('woff');
+}
+
+
+
+
+
+.heading-title {
+  font-size: 72px;
+  width: 900px;
+  color: var(--clr-primary);
+  margin-bottom: var(--spacing-md);
+  font-family: "Manrope", sans-serif;
+  font-weight: 300;
+  text-align: center;
+  line-height: 72px;
+}
+
+.heading-text {
+  font-size: 1.525rem;
+  color: var(--clr-text);
+  margin-bottom: var(--spacing-md);
+  font-family: "Manrope", sans-serif;
+  font-weight: 300;
+  width: 1000px;
+}

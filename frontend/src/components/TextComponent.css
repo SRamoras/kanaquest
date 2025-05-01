@@ -1,0 +1,39 @@
+.scroll-reveal-container {
+  min-height: 100vh; /* Para garantir que haja scroll */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-family: "Manrope", sans-serif;
+  font-weight: 200;
+  text-align: center;
+}
+
+.reveal-type {
+  font-size: 72.7273px;
+  text-align: center;
+  line-height: 80px;
+  font-weight: 300;
+}
+
+/* Impede que as palavras sejam quebradas no meio */
+.reveal-type .word {
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .reveal-type {
+    font-size: 36px;  /* Reduz o tamanho da fonte */
+    line-height: 44px; /* Ajusta o espaçamento entre as linhas */
+    padding: 0 20px;   /* Espaçamento horizontal */
+    word-break: normal;
+    overflow-wrap: normal;
+    hyphens: none;
+    white-space: normal;
+  }
+  /* Opcional: se precisar forçar o não-quebramento em mobile também */
+  .reveal-type .word {
+    white-space: nowrap;
+  }
+}

@@ -1,0 +1,9 @@
+.footer {
+    background: var(--clr-primary);
+    color: var(--clr-bg-default);
+    padding: var(--spacing-md) 0;
+  }
+  
+  .footer .container {
+    text-align: center;
+  }

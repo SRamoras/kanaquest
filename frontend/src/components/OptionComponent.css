@@ -1,0 +1,129 @@
+.images-section {
+  padding: 4rem 2rem;
+  background-color: var(--clr-bg-light);
+  font-family: "Inter", sans-serif;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+
+}
+
+.card {
+  overflow: hidden;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);  cursor: pointer;
+}
+
+.card-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 0;
+  object-fit: cover;
+  height: 600px;
+  padding-bottom: 66.66%; /* 3:2 aspect ratio */
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+}
+
+.card-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  top: 0;
+  left: 0; 
+}
+/* 1) Garante que a imagem não ultrapasse o card */
+.card, 
+.card-image-wrapper {
+  overflow: hidden;
+}
+
+/* 2) Transição e escala da imagem */
+.card-image {
+  transition: transform 0.5s ease;
+
+}
+.card:hover .card-image {
+  transform: scale(1.1);
+
+}
+
+/* 3) Transição do botão */
+
+
+/* dispara o estado de hover do botão quando o card for hover */
+.card:hover .card-button,
+.card-button:hover {
+  background: var(--clr-secondary);
+  transform: scale(1.05);
+}
+
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+  padding: 5rem;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  font-size: 2.75em;
+  font-weight: 300;
+  line-height: 150%;
+}
+
+.card-description {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+
+  font-size: 1.0625em;
+  font-weight: 300;
+  line-height: 145%;
+}
+
+.card-button {
+  padding: 0.6rem 1.2rem;
+  background: var(--clr-primary);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.card-button:hover {
+  background: var(--clr-secondary);
+}
+
+
+
+
+
+

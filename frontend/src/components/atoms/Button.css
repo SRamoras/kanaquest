@@ -1,0 +1,200 @@
+.gradient-button.primary {
+  position: relative;
+  background: black;
+  color: white;
+  padding: 10px 10px;
+  font-size: 16px;
+  border: none;
+  border-radius:50px;
+  cursor: pointer;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Manrope", sans-serif;
+  transition: background 0.5s ease, color 0.5s ease;
+}
+.button-text.primary {
+
+display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  color: white;
+margin:0 10px;
+margin-bottom: 0.2px;
+
+}
+/* Pseudo-elemento para o gradiente animado com background gigante */
+.gradient-button.primary::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Gradiente simétrico com 6 paradas: primeira e última iguais */
+  /* background: linear-gradient(90deg, #ffd451, #ff7c55, #38b3df, #38b3df, #ff7c55, #ffd451); */
+  background: linear-gradient(
+  90deg,
+  #ff6666 0%,
+  #cc0000 50%,
+  #660000 100%
+);
+
+  
+  /* Background gigante para que o loop seja imperceptível */
+  background-size: 1000% 100%;
+  background-repeat: repeat-x;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 0;
+}
+
+/* Ao passar o mouse, ativa o pseudo-elemento e inicia a animação */
+.gradient-button.primary:hover::after {
+  opacity: 1;
+  /* Duração longa para que o movimento seja suave e imperceptível */
+  animation: gradientAnimation 20s linear infinite;
+}
+
+/* Texto e ícone sempre acima do pseudo-elemento */
+.button-text,
+.button-icon {
+  position: relative;
+  z-index: 1;
+  transition: color 0.5s ease;  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Transições para o SVG */
+.button-icon svg circle {
+  transition: fill 0.5s ease, stroke 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+.button-icon svg path {
+  transition: fill 0.5s ease;  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* No hover, o texto muda para preto */
+.gradient-button:hover .button-text {
+  color: black;
+}
+
+/* No hover, o ícone: círculo fica preto e seta branca */
+.gradient-button:hover .button-icon svg circle {
+  fill: black;
+  stroke: black;
+}
+.gradient-button:hover .button-icon svg path {
+  fill: white;
+}
+
+/* Keyframes para animar o gradiente suavemente */
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+
+
+
+
+
+/* ========== SECONDARY ========== *//* remove full border from secondary */
+.gradient-button.secondary {
+  background: transparent;
+  color: #fff;
+  border: none; /* no full border */
+  border-radius: 0;
+  padding:10px 0;
+  position: relative;
+
+  color: white;
+
+  font-size: 16px;
+  border: none;
+
+  cursor: pointer;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap:14px;
+  font-family: "Manrope", sans-serif;
+  transition: background 0.5s ease, color 0.5s ease;
+}
+.button-text.secondary  {
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  color: white;
+  margin:0;
+  margin-bottom: 0.2px;
+
+  
+  }
+
+
+  .gradient-button.secondary {
+    position: relative;      /* precisa estar posicionado pra abrigar o ::after */
+  }
+  
+  .gradient-button.secondary::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 1px;             /* espessura da underline */
+    width: 0;                /* começa colapsado */
+    background: #fff;        /* cor da underline */
+    transition: width 0.3s ease;
+    z-index: 1;
+  }
+  
+  /* 2) Aplique no hover do botão */
+  .gradient-button.secondary:hover::after {
+    width: 100%;
+  }
+  
+  /* 3) Aplique também no hover do card-image-wrapper */
+  .card-image-wrapper:hover .gradient-button.secondary::after {
+    width: 100%;
+
+  }
+
+/* expand underline on hover */
+.gradient-button.secondary:hover::after {
+  width: 100%;
+}
+
+.gradient-button.secondary:hover .button-text {
+  color: white;
+}
+
+/* No hover, o ícone: círculo fica preto e seta branca */
+.gradient-button.secondary:hover .button-icon svg circle {
+  fill: white; 
+  stroke: white;
+}
+.gradient-button.secondary:hover .button-icon svg path {
+  fill: black;
+}
+
+
+/* keep text/icon color change if desired */
