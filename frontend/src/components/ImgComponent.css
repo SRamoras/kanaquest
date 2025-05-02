@@ -1,0 +1,38 @@
+/* ImgComponent.css */
+.image-text-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10%;
+    justify-content: space-between;
+    padding: 0 10%;
+  }
+  
+  .image-text-img {
+
+    height: auto;
+    width: 50%;
+
+  }
+  .image-text-content h2, 
+  .image-text-content p {
+    text-align: start;
+    width: 100%;
+  }
+  .image-text-content {
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+  }
+  
+  .image-text-title {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .image-text-paragraph {
+    margin: 8px 0 0;
+    font-size: 1rem;
+    color: #666;
+  }
+  

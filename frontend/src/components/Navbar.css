@@ -7,14 +7,15 @@
     width: 100%;
     font-family: "Manrope", sans-serif;
     border-bottom: var(--clr-border) 1px solid;
+    z-index: 222;
   }
   .logo {
 width: 160px;
 
   }
   .container {
-    width: 73%;
- 
+   padding: 0 10%;
+ width: 100%;
     margin: 0 auto;
     display: flex;
     align-items: center;

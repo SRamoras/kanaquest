@@ -1,0 +1,114 @@
+.testimonials-container {
+  position: relative;
+
+  margin: 50px auto 0;
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+}
+
+.testimonials-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0 10%;  
+}
+
+.testimonials-title {
+  display: flex;
+  flex-direction: column;
+  color: #333;
+}
+
+.testimonial-quote {
+  font-family: "Manrope", sans-serif;
+  font-size: 1.25em;
+  font-weight: 400;
+  line-height: 145%;
+  color: #000;
+  max-width: 33ch;
+  text-align: center;
+}
+
+
+.testimonials-title p, .testimonials-title h2  {
+  text-align: start;
+  
+}
+
+.testimonials-controls {
+  display: flex;
+  gap: 1rem;
+}
+
+.arrow-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 50%;
+  border: solid 1px #00000070;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.arrow-button svg{
+color: #000;
+  width: 16px;
+  height: 16px;
+  transition: color 0.3s ease;
+}
+.arrow-button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.testimonials-track {
+  display: flex;
+  gap: 24px;
+  padding: 0 10%;
+  overflow-x: auto;
+  scroll-behavior: smooth;/* rolagem suave */
+  -ms-overflow-style: none;/* IE/Edge */
+  scrollbar-width: none;   /* Firefox */
+}
+
+.testimonials-track::-webkit-scrollbar {
+  display: none;           /* Chrome/Safari */
+}
+
+.testimonial-card {
+  flex: 0 0 auto;
+  min-width: 600px;
+  height: 400px;
+  background: #ebede7;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  gap: 30px;
+}
+
+
+
+
+
+
+.testimonial-name {
+  font-weight: bold;
+  color: #000;
+  text-transform: uppercase;
+  font-size: .875em;
+  line-height: 140%;
+  font-weight: 200;
+  font-family: "Manrope", sans-serif;
+  margin-bottom: 0.25rem;
+}
+
+.testimonial-role {
+  font-size: 0.9rem;
+  color: #777;
+}

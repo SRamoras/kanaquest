@@ -6,7 +6,7 @@ import Img2 from '/images/puzzle.jpg';
 import Img3 from '/images/flashcards.webp';
 import Divider from './atoms/Divider';
 import Button from './atoms/Button';
-
+import DividerLine from './atoms/DividerLine';
 export default function ImagesSection() {
   const cards = [
     {
@@ -31,9 +31,13 @@ export default function ImagesSection() {
   
 
   return (
-    <section className="images-section">
+ <div> 
+  
+  <Divider/> 
+ 
+ <section className="images-section">
 
-<Divider/>
+
 
 
 <TextCenter
@@ -59,6 +63,10 @@ export default function ImagesSection() {
           </div>
         ))}
       </div>
+     
     </section>
+    
+      <DividerLine thickness="2px" color="#ccc" margin="10rem 0" />
+    </div>
   );
 }
