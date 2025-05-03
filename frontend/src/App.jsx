@@ -5,6 +5,10 @@ import Layout from './components/layouts/Layout';
 import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
 import QuizPage from './pages/QuizPage';
+import SignupPage from './pages/SignupPage';
+
+
+
 import './index.css';
 
 export default function App() {
@@ -14,8 +18,10 @@ export default function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/Login" element={<LoginPage />} />
-          <Route path="/features" element={<MainPage />} />
+          <Route path="/signup" element={<SignupPage />} />
           <Route path="/quiz" element={<QuizPage />} />
+
+          
           {/* Adicione mais rotas conforme necessário */}
         </Routes>
       </Layout>

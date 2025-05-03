@@ -19,6 +19,7 @@ app.use(cors({ origin: 'http://localhost:5173' })); // Ajuste o origin conforme 
 app.use(express.static(path.join(__dirname, '../public')));
 
 // Rotas de API
+
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/kana', kanaRoutes);

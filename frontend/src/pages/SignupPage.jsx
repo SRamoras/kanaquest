@@ -1,25 +1,30 @@
 import React, { useState } from 'react';
-import './LoginPage.css';
+import './SignupPage.css';
 import InputComponent from '../components/atoms/Input';
 import Button from '../components/atoms/Button';
 import api from '../services/api';
+import { useNavigate } from 'react-router-dom';
 
-export default function LoginPage() {
-  const [formValues, setFormValues] = useState({ email: '', password: '' });
+export default function SignupPage() {
+  const [formValues, setFormValues] = useState({ email: '', password: '', confirmPassword: '' });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormValues((prev) => ({ ...prev, [name]: value }));
+    setFormValues(prev => ({ ...prev, [name]: value }));
   };
 
   const validate = () => {
     const errs = {};
     if (!formValues.email) errs.email = 'Email is required';
     else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(formValues.email)) errs.email = 'Invalid email address';
+
     if (!formValues.password) errs.password = 'Password is required';
     else if (formValues.password.length < 6) errs.password = 'Password must be at least 6 characters';
+
+    if (formValues.password !== formValues.confirmPassword) errs.confirmPassword = 'Passwords do not match';
     return errs;
   };
 
@@ -34,25 +39,25 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const { data } = await api.post('/auth/login', formValues);
-      console.log('[LoginPage] resposta do servidor:', data);
-      console.log('[LoginPage] access_token:', data.session.access_token);
-      console.log('[LoginPage] refresh_token:', data.session.refresh_token);
-
-      localStorage.setItem('token', data.session.access_token);
-      // redirecionar ou atualizar estado global de autenticação aqui
+      const { data } = await api.post('/auth/signup', {
+        email: formValues.email,
+        password: formValues.password
+      });
+      console.log('[SignupPage] resposta do servidor:', data);
+      // opcional: auto-login ou redirecionar para login
+      navigate('/login');
     } catch (err) {
-      console.error('[LoginPage] erro ao logar:', err.response?.data || err.message);
-      setErrors({ submit: err.response?.data?.error || 'Login failed' });
+      console.error('[SignupPage] erro ao registrar:', err.response?.data || err.message);
+      setErrors({ submit: err.response?.data?.error || 'Signup failed' });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="login-page-container">
-      <form className="login-form" onSubmit={handleSubmit} noValidate>
-        <h2 className="login-title">Login to Your Account</h2>
+    <div className="signup-page-container">
+      <form className="signup-form" onSubmit={handleSubmit} noValidate>
+        <h2 className="signup-title">Create New Account</h2>
 
         <InputComponent
           label="Email"
@@ -74,10 +79,20 @@ export default function LoginPage() {
           error={errors.password}
         />
 
+        <InputComponent
+          label="Confirm Password"
+          type="password"
+          name="confirmPassword"
+          value={formValues.confirmPassword}
+          placeholder="••••••••"
+          onChange={handleChange}
+          error={errors.confirmPassword}
+        />
+
         {errors.submit && <p className="error-message">{errors.submit}</p>}
 
         <Button variant="primary" type="submit" disabled={loading}>
-          {loading ? 'Signing In...' : 'Sign In'}
+          {loading ? 'Signing Up...' : 'Sign Up'}
         </Button>
       </form>
     </div>

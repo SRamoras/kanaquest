@@ -13,8 +13,10 @@ export default function KanaTables() {
           api.get('/kana'),
           api.get('/userknownkana'),
         ]);
+
+        console.log('[DEBUG] Primeiro objeto de /kana:', kanaRes.data[0]); // 👈
         setKanaRows(kanaRes.data);
-        const knownIds = new Set(knownRes.data.map(r => r.kana_id ?? r.id));
+        const knownIds = new Set(knownRes.data.map(r => r.kana_id));
         setSelectedIds(knownIds);
       } catch (err) {
         console.error('Erro ao buscar dados:', err);
@@ -26,13 +28,14 @@ export default function KanaTables() {
   }, []);
 
   const handleToggle = async (id, isChecked) => {
+    console.log('[KanaTables] Toggling ID:', id, 'Checked:', isChecked);
     try {
       if (isChecked) {
-        // insere apenas o id marcado
-        await api.post('/userknownkana', { kanaIds: [id] });
+        const response = await api.post('/userknownkana', { kanaIds: [id] });
+        console.log('[KanaTables] POST response:', response.data);
       } else {
-        // remove apenas o id desmarcado (implemente DELETE no backend)
-        await api.delete('/userknownkana', { data: { kanaIds: [id] } });
+        const response = await api.delete('/userknownkana', { data: { kanaIds: [id] } });
+        console.log('[KanaTables] DELETE response:', response.data);
       }
       setSelectedIds(prev => {
         const next = new Set(prev);
@@ -41,7 +44,7 @@ export default function KanaTables() {
         return next;
       });
     } catch (err) {
-      console.error('Erro ao atualizar conhecido:', err);
+      console.error('[KanaTables] Erro ao atualizar conhecido:', err.response?.data || err.message);
     }
   };
 
@@ -60,7 +63,7 @@ export default function KanaTables() {
         </thead>
         <tbody>
           {kanaRows.map((row, idx) => {
-            const id = row.kana_id ?? row.id;
+            const id = row.id; // usa o campo correto: kana_id
             const isChecked = selectedIds.has(id);
             return (
               <tr key={idx}>

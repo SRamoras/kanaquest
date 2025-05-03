@@ -8,7 +8,7 @@ let kanaCache = [];
   try {
     const { data, error } = await supabase
       .from('kana')
-      .select('character,romaji')
+      .select('id, character, romaji') 
       .order('id', { ascending: true });
 
     if (error) throw error;
