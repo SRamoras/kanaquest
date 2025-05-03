@@ -1,6 +1,12 @@
+// src/components/QuestionsComponent.jsx
 import React, { useState, useRef, useEffect } from 'react';
 import './QuestionsComponent.css';
 import Img2 from '/images/img3.jpg';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
 const faqItems = [
   {
     id: 1,
@@ -32,11 +38,14 @@ const faqItems = [
 const Questions = () => {
   const [openId, setOpenId] = useState(null);
   const contentRefs = useRef({});
+  const headerRef = useRef(null);
+  const listRef = useRef(null);
 
   const toggle = (id) => {
     setOpenId(prev => (prev === id ? null : id));
   };
 
+  // Ajusta a altura dos conteúdos abertos
   useEffect(() => {
     Object.values(contentRefs.current).forEach(ref => {
       if (!ref) return;
@@ -45,22 +54,69 @@ const Questions = () => {
         : '0px';
     });
   }, [openId]);
+
+  // Animação do título e subtítulo (header)
+  useEffect(() => {
+    const elems = headerRef.current.querySelectorAll('.heading-title, .heading-text');
+    gsap.fromTo(
+      elems,
+      { y: 20, filter: 'blur(5px)', opacity: 0 },
+      {
+        y: 0,
+        filter: 'blur(0px)',
+        opacity: 1,
+        duration: 1,
+        ease: 'power2.out',
+
+        stagger: 0.3,
+        scrollTrigger: {
+          trigger: headerRef.current,
+          start: 'top 90%',
+          toggleActions: 'play none none none',
+          // markers: true,
+        }
+      }
+    );
+  }, []);
+
+  // Animação dos itens de FAQ
+  useEffect(() => {
+    const items = gsap.utils.toArray('.question-item');
+    gsap.fromTo(
+      items,
+      { y: 50, autoAlpha: 0, filter: 'blur(5px)' },
+      {
+        y: 0,
+        autoAlpha: 1,
+        filter: 'blur(0px)',
+        duration: 1,
+        ease: 'power2.out',
   
-  
+        stagger: 0.2,
+        scrollTrigger: {
+          trigger: listRef.current,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+          // markers: true,
+        }
+      }
+    );
+    ScrollTrigger.refresh();
+  }, []);
 
   return (
     <div className="questions-container">
-      <div className="questions-header">
-       <div>
-        <h2 className="heading-title">Frequently Asked Questions</h2>
-        <p className="heading-text">
-          Here you’ll find answers to the most common questions about Kana Quest.
-        </p>
-</div>
-{/* <img  src={Img2} alt="" /> */}
-
+      <div className="questions-header" ref={headerRef}>
+        <div>
+          <h2 className="heading-title">Frequently Asked Questions</h2>
+          <p className="heading-text">
+            Here you’ll find answers to the most common questions about Kana Quest.
+          </p>
+        </div>
+        {/* <img src={Img2} alt="" /> */}
       </div>
-      <div className="questions-list">
+
+      <div className="questions-list" ref={listRef}>
         {faqItems.map(item => (
           <div key={item.id} className="question-item">
             <div

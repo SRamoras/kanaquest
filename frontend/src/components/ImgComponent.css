@@ -1,17 +1,17 @@
 /* ImgComponent.css */
 .image-text-wrapper {
     display: flex;
-    align-items: center;
+    align-items: start;
     gap: 10%;
     justify-content: space-between;
     padding: 0 10%;
+    margin-bottom: 10rem ;
   }
   
   .image-text-img {
-
-    height: auto;
-    width: 50%;
-
+    height: 700px;
+    object-fit: cover;
+    width: 40%;
   }
   .image-text-content h2, 
   .image-text-content p {
@@ -22,6 +22,8 @@
     display: flex;
     width: 50%;
     flex-direction: column;
+    align-items: start;
+    gap: 20px;
   }
   
   .image-text-title {

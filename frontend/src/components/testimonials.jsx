@@ -1,6 +1,10 @@
 // src/components/Testimonials.jsx
 import React, { useRef, useState, useEffect } from 'react';
 import './Testimonials.css';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const testimonials = [
   { id: 1, name: 'Ana Silva', role: 'CEO, Example Corp', quote: 'This product completely transformed how we manage our workflow. Highly recommend!' },
@@ -12,6 +16,7 @@ const testimonials = [
 
 const Testimonials = () => {
   const trackRef = useRef(null);
+  const titleRef = useRef(null);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(false);
 
@@ -28,6 +33,58 @@ const Testimonials = () => {
     return () => window.removeEventListener('resize', updateButtons);
   }, []);
 
+  // Animação do título e subtítulo
+  useEffect(() => {
+    const elems = titleRef.current.querySelectorAll('.heading-title, .heading-text');
+
+    gsap.fromTo(
+      elems,
+      { y: 20, filter: 'blur(5px)', opacity: 0 },
+      {
+        y: 0,
+        filter: 'blur(0px)',
+        opacity: 1,
+        duration: 1,
+        ease: 'power2.out',
+        delay: 0.1,
+        stagger: 0.3,
+        scrollTrigger: {
+          trigger: titleRef.current,
+          start: 'top 90%',
+          toggleActions: 'play none none none',
+          // markers: true,
+        }
+      }
+    );
+  }, []);
+
+  // Animação dos cards
+  useEffect(() => {
+    const cards = gsap.utils.toArray('.testimonial-card');
+
+    gsap.fromTo(
+      cards,
+      { y: 50, autoAlpha: 0, filter: 'blur(5px)' },
+      {
+        y: 0,
+        autoAlpha: 1,
+        filter: 'blur(0px)',
+        duration: 1,
+        ease: 'power2.out',
+        delay: 0.2,
+        stagger: 0.15,
+        scrollTrigger: {
+          trigger: trackRef.current,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+          // markers: true,
+        }
+      }
+    );
+
+    ScrollTrigger.refresh();
+  }, []);
+
   const handleScroll = (direction) => {
     const track = trackRef.current;
     if (!track) return;
@@ -36,13 +93,13 @@ const Testimonials = () => {
     const amount = card.offsetWidth + gap;
 
     track.scrollBy({ left: direction === 'next' ? amount : -amount, behavior: 'smooth' });
-    setTimeout(updateButtons, 300); // atualiza após o scroll suave
+    setTimeout(updateButtons, 300);
   };
 
   return (
     <section className="testimonials-container">
       <div className="testimonials-header">
-        <div className="testimonials-title">
+        <div className="testimonials-title" ref={titleRef}>
           <h2 className="heading-title">Testimonials</h2>
           <p className="heading-text">What our clients say about us</p>
         </div>
@@ -52,17 +109,10 @@ const Testimonials = () => {
             onClick={() => handleScroll('prev')}
             disabled={!canPrev}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24" height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={1.5}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="icon"
-            >
+            {/* Ícone de seta para a esquerda */}
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}
+                 strokeLinecap="round" strokeLinejoin="round" className="icon">
               <path d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
             </svg>
           </button>
@@ -71,17 +121,10 @@ const Testimonials = () => {
             onClick={() => handleScroll('next')}
             disabled={!canNext}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24" height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={1.5}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="icon"
-            >
+            {/* Ícone de seta para a direita */}
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}
+                 strokeLinecap="round" strokeLinejoin="round" className="icon">
               <path d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
             </svg>
           </button>

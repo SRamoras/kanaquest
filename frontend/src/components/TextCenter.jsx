@@ -9,8 +9,7 @@ const TextCenter = ({ title, text }) => {
   const textRef = useRef(null);
 
   useEffect(() => {
-    // Select elements with the specified classes within the container
-    const lines = textRef.current.querySelectorAll('.option-title, .option-text');
+    const lines = textRef.current.querySelectorAll('.heading-title, .heading-text');
 
     gsap.fromTo(
       lines,
@@ -21,10 +20,12 @@ const TextCenter = ({ title, text }) => {
         opacity: 1,
         duration: 1,
         ease: 'power2.out',
+        delay: 0.2,       // adiciona 0.5s de atraso antes de iniciar
         stagger: 0.3,
         scrollTrigger: {
           trigger: textRef.current,
           start: 'top 90%',
+          toggleActions: 'play none none none',
           // markers: true,
         }
       }

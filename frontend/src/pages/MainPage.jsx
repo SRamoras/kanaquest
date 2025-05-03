@@ -49,7 +49,7 @@ const MainPage = () => {
         <DividerLine  margin="10rem 0" />
        <ImgComponent />  
        
-       <DividerLine  margin="10rem 0" />
+       {/* <DividerLine  margin="10rem 0" /> */}
    </div>
 
 

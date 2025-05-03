@@ -21,7 +21,7 @@ export default function Heading({
     // Define a animação de width de 50% → 100% com scroll
     gsap.fromTo(
       imageRef.current,
-      { width: '70%' },     // Largura inicial (ajuste como preferir)
+      { width: '80%' },     // Largura inicial (ajuste como preferir)
       {
         width: '100%',      // Largura final
         ease: 'none',

@@ -1,0 +1,66 @@
+
+/* src/components/TranslateWidget.css */
+.tw-widget {
+  position: relative;
+  display: inline-block;
+  font-family: var(--font-sans);
+}
+
+.tw-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: var(--clr-bg-default);
+  color: var(--clr-primary);
+  border: 2px solid var(--clr-primary);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  width: 160px;
+}
+
+.tw-arrow {
+  margin-left: 0.5rem;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--clr-primary);
+  transition: transform 0.2s;
+}
+.tw-arrow.open {
+  transform: rotate(180deg);
+}
+
+.tw-list {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  margin-bottom: 0.25rem;
+  background: var(--clr-bg-default);
+  border: 2px solid var(--clr-primary);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  list-style: none;
+  padding: 0.25rem 0;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 100%;
+  z-index: 10;
+}
+
+.tw-item {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--clr-primary);
+}
+.tw-item:hover {
+  background: var(--clr-primary-light);
+  color: var(--clr-bg-default);
+}
+.tw-item.selected {
+  background: var(--clr-primary);
+  color: var(--clr-bg-default);
+  font-weight: bold;
+}
