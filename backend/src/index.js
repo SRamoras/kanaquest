@@ -9,7 +9,7 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const kanaRoutes = require('./routes/kana');
 const userKnownKanaRoutes = require('./routes/userKnownKana');
-
+const kanaattemptsRoutes = require('./routes/kanaAttempts')
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -19,11 +19,13 @@ app.use(cors({ origin: 'http://localhost:5173' })); // Ajuste o origin conforme 
 app.use(express.static(path.join(__dirname, '../public')));
 
 // Rotas de API
-
+app.use('/api/kanaStats', require('./routes/kanaStats'));
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/kana', kanaRoutes);
 app.use('/api/userknownkana', userKnownKanaRoutes);
+app.use('/api/kanaattempts', kanaattemptsRoutes);
+
 
 // Health check
 app.get('/api/health', (req, res) => {

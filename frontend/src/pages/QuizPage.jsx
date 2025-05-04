@@ -1,85 +1,111 @@
 import React, { useEffect, useState } from 'react';
-import api from '../services/api'; // ajuste o caminho se necessário
+import api from '../services/api';
+import KanaGrid from '../components/KanaGrid';
+import KanjiTable from '../components/KanjiGrid';
+import './QuizPage.css';
+import Button from '../components/atoms/Button';
+import { useNavigate } from 'react-router-dom';
+const TABS = [
+  { key: 'hiragana', label: 'Hiragana' },
+  { key: 'katakana', label: 'Katakana' },
+  { key: 'kanji',    label: 'Kanji'    }
+];
 
-export default function KanaTables() {
-  const [kanaRows, setKanaRows] = useState([]);
+export default function AlphabetTabs() {
+  const [data, setData]           = useState({ hiragana: [], katakana: [], kanji: [] });
   const [selectedIds, setSelectedIds] = useState(new Set());
-  const [loading, setLoading] = useState(true);
-
+  const [active, setActive]       = useState('hiragana');
+  const [loading, setLoading]     = useState(true);
+  const navigate = useNavigate();
+  /* 1) Busca tudo */
   useEffect(() => {
-    async function fetchData() {
+    (async () => {
       try {
         const [kanaRes, knownRes] = await Promise.all([
           api.get('/kana'),
-          api.get('/userknownkana'),
+          api.get('/userknownkana')
         ]);
 
-        console.log('[DEBUG] Primeiro objeto de /kana:', kanaRes.data[0]); // 👈
-        setKanaRows(kanaRes.data);
-        const knownIds = new Set(knownRes.data.map(r => r.kana_id));
-        setSelectedIds(knownIds);
+        /* --- separa por type (hiragana|katakana|kanji) ------------ */
+        const separated = { hiragana: [], katakana: [], kanji: [] };
+        kanaRes.data.forEach(r => {
+          const key = (r.type ?? '').toLowerCase().trim();  // <<<<<< usa "type"
+          if (separated[key]) separated[key].push(r);
+          else console.warn('Tipo desconhecido:', r);       // debugging
+        });
+
+        setData(separated);
+        setSelectedIds(new Set(knownRes.data.map(r => r.kana_id)));
       } catch (err) {
         console.error('Erro ao buscar dados:', err);
       } finally {
         setLoading(false);
       }
-    }
-    fetchData();
+    })();
   }, []);
 
-  const handleToggle = async (id, isChecked) => {
-    console.log('[KanaTables] Toggling ID:', id, 'Checked:', isChecked);
+  /* 2) Marca/desmarca conhecido */
+  const toggleKnown = async (id, willBeKnown) => {
     try {
-      if (isChecked) {
-        const response = await api.post('/userknownkana', { kanaIds: [id] });
-        console.log('[KanaTables] POST response:', response.data);
-      } else {
-        const response = await api.delete('/userknownkana', { data: { kanaIds: [id] } });
-        console.log('[KanaTables] DELETE response:', response.data);
-      }
+      if (willBeKnown)
+        await api.post('/userknownkana', { kanaIds: [id] });
+      else
+        await api.delete('/userknownkana', { data: { kanaIds: [id] } });
+
       setSelectedIds(prev => {
         const next = new Set(prev);
-        if (isChecked) next.add(id);
-        else next.delete(id);
+        willBeKnown ? next.add(id) : next.delete(id);
         return next;
       });
     } catch (err) {
-      console.error('[KanaTables] Erro ao atualizar conhecido:', err.response?.data || err.message);
+      console.error('Erro ao atualizar conhecido:', err.response?.data || err.message);
     }
   };
 
-  if (loading) return <p>Carregando...</p>;
-  if (!kanaRows.length) return <p>Nenhum kana disponível.</p>;
+  /* 3) Render */
+  if (loading) return <p>Carregando…</p>;
 
   return (
-    <div>
-      <h2>Tabela Kana</h2>
-      <table border="1" cellPadding="4" cellSpacing="0">
-        <thead>
-          <tr>
-            {Object.keys(kanaRows[0]).map(col => <th key={col}>{col}</th>)}
-            <th>Conhecido</th>
-          </tr>
-        </thead>
-        <tbody>
-          {kanaRows.map((row, idx) => {
-            const id = row.id; // usa o campo correto: kana_id
-            const isChecked = selectedIds.has(id);
-            return (
-              <tr key={idx}>
-                {Object.values(row).map((val, i) => <td key={i}>{val}</td>)}
-                <td>
-                  <input
-                    type="checkbox"
-                    checked={isChecked}
-                    onChange={() => handleToggle(id, !isChecked)}
-                  />
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+    <div className="quiz-page-container">
+     
+     
+     <div className="quiz-header">
+     <h1 className="heading-title quiz">Quiz de Kana</h1>
+      <p className="heading-text quiz">Here you can tailor your practice to exactly what you need: simply tick the kana symbols you already know—or leave them unchecked if you still want to review them—then start the quiz. The trainer will build each round using only the characters you selected, letting you focus on new or tricky kana without wasting time on the ones you’ve already mastered. As you improve, just add more symbols to your active set and watch your reading speed climb.</p>
+      <Button  onClick={() => navigate('/quiz')}>START QUIZ</Button>
+      </div>
+    
+
+    <div className="tabs-wrapper">
+      <div className="tab-bar">
+        {TABS.map(t => (
+          <button
+            key={t.key}
+            className={t.key === active ? 'tab active' : 'tab'}
+            onClick={() => setActive(t.key)}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="tab-content">
+        {active === 'kanji' ? (
+          <KanjiTable
+            rows={data.kanji}
+            selectedIds={selectedIds}
+            onToggle={toggleKnown}
+          />
+        ) : (
+          <KanaGrid
+            rows={data[active]}
+            selectedIds={selectedIds}
+            onToggle={toggleKnown}
+            alphabet={active}           /* “active” continua igual */
+          />
+        )}
+      </div>
+
+    </div>  </div>
   );
 }

@@ -1,0 +1,5 @@
+.kanji-table { width: 100%; border-collapse: collapse; }
+.kanji-table th, .kanji-table td { border: 1px solid #ccc; padding: 6px 10px; text-align: center; }
+.kanji-table .char { font-size: 2rem; }
+.kanji-table tr.known   td { border-color: green; }
+.kanji-table tr.unknown td { border-color: red; }

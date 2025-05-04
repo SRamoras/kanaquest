@@ -1,0 +1,25 @@
+/* grade retangular 10 × n ---------------------------------------------------*/
+.kanji-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 72px);
+    grid-auto-rows: 90px;
+    gap: 14px 10px;             /* (linha , coluna) */
+    justify-content: center;
+    min-height:506px ;
+  }
+  
+  .cell1 {
+    position: relative;
+    border: 2px solid red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;            /* kanji maior que kana  */
+    cursor: pointer;
+    user-select: none;
+    transition: border-color .2s;
+    font-weight: 100;
+  }
+  .cell1.known { border-color: green;background-color: rgba(144, 238, 144, 0.212); }
+  
+  .char { line-height: 1; }
