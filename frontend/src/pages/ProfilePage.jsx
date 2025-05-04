@@ -145,9 +145,12 @@ export default function ProfilePage() {
         <div className='header-pp-info'>
           <div className="pp-card">
             <h2>Overall Accuracy</h2>
-            <div className='center-info-profile'>   <Chart
+            <div className='center-info-profile'>  
+                 <Chart
+                 
               options={{
                 chart: { type: 'radialBar' },
+                colors: ['#cc0000'],
                 plotOptions: {
                   radialBar: { dataLabels: { value: { formatter: v => `${v.toFixed(1)}%` } } }
                 },
@@ -188,11 +191,13 @@ export default function ProfilePage() {
 
           <div className="pp-card">
             <h2>Correct by Type</h2>
-           <div className='center-info-profile'> <Chart
+           <div className='center-info-profile'> 
+            <Chart
               options={{
                 chart: { type: 'donut' },
+             
                 labels: donutLabels,
-                colors: ['#3182CE', '#805AD5', '#DD6B20'],
+                colors: ['#cc0000', '#805AD5', '#DD6B20'],
                 legend: { position: 'bottom' }
               }}
               series={donutSeries}
@@ -210,6 +215,7 @@ export default function ProfilePage() {
           <Chart
             options={{
               chart: { type: 'bar', toolbar: { show: false } },
+              colors: ['#cc0000'],
               xaxis: { categories: sortedByWrong.slice(0, 5).map(o => o.char) },
               yaxis: { labels: { formatter: v => `${v}%` } },
               plotOptions: { bar: { borderRadius: 4, horizontal: false } }
@@ -226,6 +232,7 @@ export default function ProfilePage() {
               chart: { type: 'bar', toolbar: { show: false } },
               xaxis: { categories: sortedByRight.slice(0, 5).map(o => o.char) },
               yaxis: { labels: { formatter: v => `${v}%` } },
+              colors: ['#cc0000'],
               plotOptions: { bar: { borderRadius: 4, horizontal: false } }
             }}
             series={[{ name: '% Right', data: sortedByRight.slice(0, 5).map(o => o.rightPct) }]}
