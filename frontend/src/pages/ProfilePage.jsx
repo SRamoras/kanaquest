@@ -1,13 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import {
-  PieChart, Pie, Cell,
-  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer
-} from 'recharts';
+import Chart from 'react-apexcharts';
+import CalendarHeatmap from 'react-calendar-heatmap';
+import 'react-calendar-heatmap/dist/styles.css';
 import api from '../services/api';
-
+import './ProfilePage.css';
+import Select from '../components/atoms/Select';
 export default function ProfilePage() {
   const [stats, setStats] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filterType, setFilter] = useState('all');
+  const [timeRange, setTimeRange] = useState('all');
+  const options = [
+    { label: 'All',      value: 'all'      },
+    { label: 'Hiragana', value: 'hiragana' },
+    { label: 'Katakana', value: 'katakana' },
+    { label: 'Kanji',    value: 'kanji'    },
+  ];
+
+  const options2 = [
+    { label: 'From Start',      value: 'all'      },
+    { label: 'Last 24h', value: '24h' },
+    { label: 'Last Week', value: 'week' },
+    { label: 'Last Month',    value: 'month'    },
+    { label: 'Last Year',    value: 'year'    },
+  ];
+
 
   useEffect(() => {
     (async () => {
@@ -22,103 +39,251 @@ export default function ProfilePage() {
     })();
   }, []);
 
-  if (loading) return <p>Loading dashboard…</p>;
+  if (loading) return <div className="pp-loading">Loading dashboard…</div>;
 
-  // Overall accuracy
-  const total = stats.length;
-  const correct = stats.filter(a => a.correct).length;
-  const accuracy = total ? Math.round((correct / total) * 100) : 0;
-
-  // Aggregate wrong counts by character
-  const wrongByChar = {};
-  stats.forEach(a => {
-    if (!a.correct) {
-      wrongByChar[a.character] = (wrongByChar[a.character] || 0) + 1;
+  // Filtragem por tempo
+  const now = new Date();
+  const filteredByTime = stats.filter(item => {
+    const date = new Date(item.created_at);
+    switch (timeRange) {
+      case '24h':   return now - date <= 24 * 60 * 60 * 1000;
+      case 'week':  return now - date <= 7 * 24 * 60 * 60 * 1000;
+      case 'month': return now - date <= 30 * 24 * 60 * 60 * 1000;
+      case 'year':  return now - date <= 365 * 24 * 60 * 60 * 1000;
+      default:      return true;
     }
   });
-  const topMissed = Object.entries(wrongByChar)
-    .map(([character, wrong]) => ({ character, wrong }))
-    .sort((a, b) => b.wrong - a.wrong)
-    .slice(0, 10);
 
-  // Data for pie chart
-  const pieData = [
-    { name: 'Correct', value: correct },
-    { name: 'Wrong',   value: total - correct }
-  ];
-  const COLORS = ['#4CAF50', '#F44336'];
+  // Filtragem por tipo
+  const filtered = filteredByTime.filter(item =>
+    filterType === 'all' ? true : item.type === filterType
+  );
+
+  // Métricas gerais
+  const total = filtered.length;
+  const correctCount = filtered.filter(item => item.correct).length;
+  const accuracyPct = total ? +(correctCount / total * 100).toFixed(1) : 0;
+
+  let bestStreak = 0, current = 0;
+  filtered.forEach(item => {
+    if (item.correct) {
+      current++;
+      bestStreak = Math.max(bestStreak, current);
+    } else current = 0;
+  });
+
+  // Dados para donut de “Correct by Type”
+  const typeCounts = filtered.reduce((acc, item) => {
+    if (item.correct) acc[item.type] = (acc[item.type] || 0) + 1;
+    return acc;
+  }, {});
+  const donutLabels = ['hiragana', 'katakana', 'kanji'];
+  const donutSeries = donutLabels.map(t => typeCounts[t] || 0);
+
+  // Heatmap (todas as datas filtradas por tempo)
+  const dateCounts = filteredByTime.reduce((acc, item) => {
+    const day = item.created_at.slice(0, 10);
+    acc[day] = (acc[day] || 0) + 1;
+    return acc;
+  }, {});
+  const heatmapValues = Object.entries(dateCounts).map(
+    ([date, count]) => ({ date, count })
+  );
+
+  // Estatísticas por caractere
+  const charMap = {};
+  filtered.forEach(item => {
+    const c = item.character;
+    if (!charMap[c]) charMap[c] = { char: c, attempts: 0, wrong: 0 };
+    charMap[c].attempts++;
+    if (!item.correct) charMap[c].wrong++;
+  });
+  const charStats = Object.values(charMap).map(o => ({
+    ...o,
+    wrongPct: +(o.wrong / o.attempts * 100).toFixed(1),
+    rightPct: +((o.attempts - o.wrong) / o.attempts * 100).toFixed(1)
+  }));
+
+  // Ordenações para tabelas
+  const sortedByRight = [...charStats].sort((a, b) => b.rightPct - a.rightPct);
+  const sortedByWrong = [...charStats].sort((a, b) => b.wrongPct - a.wrongPct);
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md space-y-8">
-      <h1 className="text-2xl font-bold">Your Kana Performance</h1>
-
-      <div className="flex flex-col md:flex-row gap-6">
-        {/* Accuracy Pie Chart */}
-        <div className="flex-1">
-          <h2 className="text-lg font-medium mb-2">Overall Accuracy</h2>
-          <ResponsiveContainer width="100%" height={200}>
-            <PieChart>
-              <Pie
-                data={pieData}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                label
-              >
-                {pieData.map((entry, index) => (
-                  <Cell key={entry.name} fill={COLORS[index]} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
-          <p className="mt-2 text-center text-xl">{accuracy}%</p>
+    <div className="pp-container">
+    
+    <div className='header-text-dashboard'>
+      <h1 className="heading-title">Your Compact Kana Performance & Practice Dashboard</h1>
+      <p className="heading-text">This dashboard lets you quickly spot mistakes, track your streaks, and monitor progress over time—all in one concise view.
+</p>
+      </div>
+      {/* FILTROS */}
+      <div className="pp-filters">
+        <div>
+    
+          <Select
+        label="Type:"
+        options={options}
+        value={filterType}
+        onChange={setFilter}
+      />
         </div>
+        <div>
 
-        {/* Top Missed Bar Chart */}
-        <div className="flex-1">
-          <h2 className="text-lg font-medium mb-2">Top 10 Missed Kana</h2>
-          <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={topMissed} margin={{ top: 0, right: 20, left: 0, bottom: 5 }}>
-              <XAxis dataKey="character" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="wrong" fill="#F44336" />
-            </BarChart>
-          </ResponsiveContainer>
+
+
+          <Select
+        label="Type:"
+        options={options2}
+        value={timeRange}
+        onChange={setTimeRange}
+      />
         </div>
       </div>
 
-      {/* Detailed Table */}
-      <div>
-        <h2 className="text-lg font-medium mb-2">Full Breakdown</h2>
-        <table className="min-w-full bg-white">
-          <thead>
-            <tr>
-              <th className="px-4 py-2">Character</th>
-              <th className="px-4 py-2">Attempts</th>
-              <th className="px-4 py-2">Wrong</th>
-              <th className="px-4 py-2">% Wrong</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.entries(wrongByChar).map(([char, wrong]) => {
-              const totalForChar = stats.filter(a => a.character === char).length;
-              const pctWrong = Math.round((wrong / totalForChar) * 100);
-              return (
-                <tr key={char}>  
-                  <td className="border px-4 py-2 text-center">{char}</td>
-                  <td className="border px-4 py-2 text-center">{totalForChar}</td>
-                  <td className="border px-4 py-2 text-center">{wrong}</td>
-                  <td className="border px-4 py-2 text-center">{pctWrong}%</td>
+      {/* TOPO: Accuracy, Streak, Donut */}
+      <div className="pp-grid-top">
+        <div className='header-pp-info'>
+          <div className="pp-card">
+            <h2>Overall Accuracy</h2>
+            <div className='center-info-profile'>   <Chart
+              options={{
+                chart: { type: 'radialBar' },
+                plotOptions: {
+                  radialBar: { dataLabels: { value: { formatter: v => `${v.toFixed(1)}%` } } }
+                },
+                labels: ['Accuracy']
+              }}
+              series={[accuracyPct]}
+              type="radialBar"
+              height={250}
+            />
+          </div>  </div>
+
+          <div className="pp-card">
+      <h2>Best Streak</h2>    
+       <div className='center-info-profile'>   
+      
+            
+            <div className="pp-streak-circle">
+              <span className="pp-streak-number">{bestStreak}</span>
+            </div>
+
+            </div>  
+
+            </div>
+        </div>
+
+        <div className='header-pp-info'>
+          <div className="pp-calendar-section">
+            <h2>Attempts Heatmap</h2>
+            <CalendarHeatmap
+              className="calendar-heatmap"
+              startDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))}
+              endDate={new Date()}
+              values={heatmapValues}
+              classForValue={v => v && v.count ? `color-scale-${Math.min(v.count, 4)}` : 'color-empty'}
+              showWeekdayLabels
+            />
+          </div>
+
+          <div className="pp-card">
+            <h2>Correct by Type</h2>
+           <div className='center-info-profile'> <Chart
+              options={{
+                chart: { type: 'donut' },
+                labels: donutLabels,
+                colors: ['#3182CE', '#805AD5', '#DD6B20'],
+                legend: { position: 'bottom' }
+              }}
+              series={donutSeries}
+              type="donut"
+              height={250}
+            /></div>
+          </div>
+        </div>
+      </div>
+
+      {/* BOTTOM: Top Wrong e Top Right */}
+      <div className="pp-grid-bottom">
+        <div className="pp-chart-card">
+          <h2>Top 5 Most Missed</h2>
+          <Chart
+            options={{
+              chart: { type: 'bar', toolbar: { show: false } },
+              xaxis: { categories: sortedByWrong.slice(0, 5).map(o => o.char) },
+              yaxis: { labels: { formatter: v => `${v}%` } },
+              plotOptions: { bar: { borderRadius: 4, horizontal: false } }
+            }}
+            series={[{ name: '% Wrong', data: sortedByWrong.slice(0, 5).map(o => o.wrongPct) }]}
+            type="bar"
+            height={200}
+          />
+        </div>
+        <div className="pp-chart-card">
+          <h2>Top 5 Best Known</h2>
+          <Chart
+            options={{
+              chart: { type: 'bar', toolbar: { show: false } },
+              xaxis: { categories: sortedByRight.slice(0, 5).map(o => o.char) },
+              yaxis: { labels: { formatter: v => `${v}%` } },
+              plotOptions: { bar: { borderRadius: 4, horizontal: false } }
+            }}
+            series={[{ name: '% Right', data: sortedByRight.slice(0, 5).map(o => o.rightPct) }]}
+            type="bar"
+            height={200}
+          />
+        </div>
+      </div>
+
+      {/* DUAS TABELAS ORDENADAS */}
+      <div className="pp-table-container-wrapper">
+      <section className="pp-table-section">
+        <h2>All Kana Sorted by % Right</h2>
+        <div className="pp-table-wrapper">
+          <table className="pp-table">
+            <thead>
+              <tr>
+                <th>Kana</th><th>Attempts</th><th>Wrong</th><th>% Wrong</th><th>% Right</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sortedByRight.map(o => (
+                <tr key={o.char}>
+                  <td>{o.char}</td>
+                  <td>{o.attempts}</td>
+                  <td>{o.wrong}</td>
+                  <td>{o.wrongPct}%</td>
+                  <td>{o.rightPct}%</td>
                 </tr>
-              )
-            })}
-          </tbody>
-        </table>
-      </div>
-    </div>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className="pp-table-section">
+        <h2>All Kana Sorted by % Wrong</h2>
+        <div className="pp-table-wrapper">
+          <table className="pp-table">
+            <thead>
+              <tr>
+                <th>Kana</th><th>Attempts</th><th>Wrong</th><th>% Wrong</th><th>% Right</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sortedByWrong.map(o => (
+                <tr key={o.char}>
+                  <td>{o.char}</td>
+                  <td>{o.attempts}</td>
+                  <td>{o.wrong}</td>
+                  <td>{o.wrongPct}%</td>
+                  <td>{o.rightPct}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div></div>
   );
 }

@@ -1,0 +1,38 @@
+.select-atom {
+    display: flex;
+    align-items: center;
+  }
+  
+  .select-label {
+    margin-right: 0.5rem;
+    font-weight: 500;
+  }
+  
+  .select-buttons {
+    display: flex;
+  }
+  
+  .select-button {
+    padding: 0.4rem 0.8rem;
+    margin-right: 0.4rem;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+  
+  .select-button:hover {
+    background-color: #f5f5f5;
+  }
+  
+  .select-button.selected {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+  }
+  
+  .select-button:last-child {
+    margin-right: 0;
+  }
+  

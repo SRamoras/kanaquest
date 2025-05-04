@@ -10,11 +10,11 @@ router.get('/', async (req, res, next) => {
     if (!userId) return res.status(401).json({ error: 'Not authenticated' });
 
     // fetch all attempts for this user, with character & romaji
-    const { data, error } = await supabase
-      .from('user_kana_stats')           // view created above
-      .select('character, romaji, correct')
-      .eq('user_id', userId)
-      .order('created_at', { ascending: true });
+   const { data, error } = await supabase
+  .from('user_kana_stats')              // materialized view with created_at & type
+  .select('character, romaji, correct, created_at, type')  // <— include created_at!
+  .eq('user_id', userId)
+  .order('created_at', { ascending: true });
 
     if (error) throw error;
     res.json(data);
