@@ -27,8 +27,8 @@ const ScrollReveal = () => {
           stagger: 0.02,
           scrollTrigger: {
             trigger: el,
-            start: 'top 80%',
-            end: 'top 40%',
+            start: 'top 62%',
+            end: 'top 20%',
             scrub: true,
             markers: false,
             toggleActions: 'play play reverse reverse'

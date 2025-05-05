@@ -39,7 +39,7 @@ height:300px
   align-items:center; 
   width: 90%;
   background:#ebede7; 
- 
+  border-radius: var(--radius);
   height:300px;
   padding: 30px;
   gap: 10px;
@@ -83,6 +83,24 @@ margin-bottom: 5%;
    .header-text-dashboard h1, .header-text-dashboard p { 
     text-align: center;
        }
+
+
+       .pp-calendar-section h2 { 
+        font-size: 18px;
+        text-align: start;
+        width: 100%;
+         }
+
+
+         .chart-bar-info{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+         }
 .pp-card {
    background:#ebede7; 
    height: 100%;
@@ -90,9 +108,10 @@ margin-bottom: 5%;
    justify-content: start;
    align-items: start;
    flex-direction: column;
-   padding:1rem;
+   padding:30px;
    flex:1 1 30%;
    text-align:center;
+   border-radius: var(--radius);
        }
 .pp-large-number { font-size:1.8rem; font-weight:bold; margin-top:0.5rem; }
 .pp-streak-circle { width:210px;
@@ -107,15 +126,28 @@ margin-bottom: 5%;
 .color-scale-3 { fill:#44a340; }
 .color-scale-4 { fill:#1e6823; }
 .pp-grid-bottom { display:flex; flex-wrap:wrap; gap:1rem; }
+
+
+
+
+
+
+
+
 .pp-chart-card {
    background:#ebede7;
       padding:1rem;
     flex:1 1 30%;
+    padding:30px;
+    border-radius: var(--radius);
     }
 
-.pp-table-section {    background:#ebede7;display: flex;
+.pp-table-section {   
+  
+  border-radius: var(--radius);
+  background:#ebede7;display: flex;
   flex-direction: column;
-  gap: 20px;  padding: 20px;width: 50%;}
+  gap: 20px;  padding: 30px;width: 50%;}
 
 
 

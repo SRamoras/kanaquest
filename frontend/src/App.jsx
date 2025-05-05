@@ -1,6 +1,6 @@
 // src/App.jsx
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './components/layouts/Layout';
 import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
@@ -11,20 +11,22 @@ import ProfilePage from './pages/ProfilePage';
 
 import './index.css';
 
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Layout />,
+    children: [
+      { index: true, element: <MainPage /> },
+      { path: 'login', element: <LoginPage /> },
+      { path: 'register', element: <SignupPage /> },
+      { path: 'kana', element: <QuizPage /> },
+      { path: 'quiz', element: <KanaTypingGame /> },
+      { path: 'profile', element: <ProfilePage /> },
+      // … outras rotas
+    ],
+  },
+]);
+
 export default function App() {
-  return (
-    <BrowserRouter>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/Login" element={<LoginPage />} />
-          <Route path="/register" element={<SignupPage />} />
-          <Route path="/kana" element={<QuizPage />} />
-          <Route path="/quiz" element={<KanaTypingGame />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          {/* Adicione mais rotas conforme necessário */}
-        </Routes>
-      </Layout>
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 }

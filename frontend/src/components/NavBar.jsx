@@ -94,7 +94,7 @@ export default function Navbar() {
                   </Link>
                 </li>
                 <li>
-                  <button onClick={handleLogout}>
+                  <button style={{color:"red"}} onClick={handleLogout}>
                     Logout
                   </button>
                 </li>

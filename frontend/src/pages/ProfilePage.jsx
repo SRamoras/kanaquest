@@ -5,6 +5,8 @@ import 'react-calendar-heatmap/dist/styles.css';
 import api from '../services/api';
 import './ProfilePage.css';
 import Select from '../components/atoms/Select';
+
+import { initSmoothScroll, destroySmoothScroll } from '../components/smoothScroll';
 export default function ProfilePage() {
   const [stats, setStats] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,6 +27,15 @@ export default function ProfilePage() {
     { label: 'Last Year',    value: 'year'    },
   ];
 
+    useEffect(() => {
+      // Configura o smooth scroll (ajusta options conforme necessário)
+      initSmoothScroll({ duration: 1.2 });
+  
+      return () => {
+        // Limpa ao desmontar
+        destroySmoothScroll();
+      };
+    }, []);
 
   useEffect(() => {
     (async () => {
@@ -158,7 +169,7 @@ export default function ProfilePage() {
               }}
               series={[accuracyPct]}
               type="radialBar"
-              height={250}
+              height={230}
             />
           </div>  </div>
 
@@ -202,7 +213,7 @@ export default function ProfilePage() {
               }}
               series={donutSeries}
               type="donut"
-              height={250}
+              height={230}
             /></div>
           </div>
         </div>
@@ -213,6 +224,7 @@ export default function ProfilePage() {
         <div className="pp-chart-card">
           <h2>Top 5 Most Missed</h2>
           <Chart
+          className="chart-bar-info"
             options={{
               chart: { type: 'bar', toolbar: { show: false } },
               colors: ['#cc0000'],
