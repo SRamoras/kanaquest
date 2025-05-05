@@ -22,7 +22,7 @@ export default function Layout({ children }) {
     setShowLoader(true);
     const timer = setTimeout(() => {
       setShowLoader(false);
-    }, 2000);
+    }, 100);
 
     return () => clearTimeout(timer);
   }, [location.pathname]);

@@ -69,7 +69,7 @@ export default function ImagesSection() {
     <div>
       <Divider />
 
-      <section className="images-section" ref={sectionRef}>
+      <section id="features" className="images-section" ref={sectionRef}>
         <TextCenter
           title="Discover Our Comprehensive Features"
           text="Dive into a robust suite of tools designed to streamline your workflow, boost collaboration, and accelerate productivity. From customizable dashboards and real-time analytics to seamless integrations and dedicated support, explore each feature to see how it can transform your experience."

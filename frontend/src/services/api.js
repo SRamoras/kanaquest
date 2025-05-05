@@ -16,4 +16,19 @@ api.interceptors.request.use(
   error => Promise.reject(error)
 );
 
+// **Interceptor para capturar 401 e redirecionar ao login**
+api.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response?.status === 401) {
+      // Remove o token expirado
+      localStorage.removeItem('token');
+      // Redireciona para a página de login
+      // Usamos location para forçar um reload completo e resetar todos os estados
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default api;

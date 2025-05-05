@@ -1,21 +1,31 @@
-// src/components/KanaTypingGame.jsx
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import './KanaTypingGame.css';
+import { gsap } from 'gsap';
+import Input from '../components/atoms/Input';
+import { MdOutlineQuiz } from "react-icons/md";
+
 
 export default function KanaTypingGame() {
   const navigate = useNavigate();
-  const [pool, setPool]         = useState([]);
-  const [current, setCurrent]   = useState(null);
-  const [input, setInput]       = useState('');
-  const [score, setScore]       = useState(0);
-  const [rounds, setRounds]     = useState(0);
-  const [loading, setLoading]   = useState(true);
+  const [pool, setPool]             = useState([]);
+  const [current, setCurrent]       = useState(null);
+  const [input, setInput]           = useState('');
+  const [score, setScore]           = useState(0);
+  const [rounds, setRounds]         = useState(0);
+  const [loading, setLoading]       = useState(true);
   const [showResults, setShowResults] = useState(false);
-  const inRef = useRef(null);
+  const [muted, setMuted]           = useState(false);
 
-  // load user-known kana
+  const inRef    = useRef(null);
+  const charRef  = useRef(null);
+
+  // Áudios de acerto e erro em public/sounds/
+  const correctAudioRef = useRef(new Audio('/sounds/correct.mp3'));
+  const wrongAudioRef   = useRef(new Audio('/sounds/wrong.mp3'));
+
+  // Carrega pool e primeira letra
   useEffect(() => {
     (async () => {
       try {
@@ -28,12 +38,22 @@ export default function KanaTypingGame() {
         setPool(clean);
         setCurrent(clean[Math.floor(Math.random() * clean.length)] || null);
       } catch (err) {
-        console.error('Erro a carregar user_known_kana:', err);
+        console.error('Erro ao carregar user_known_kana:', err);
       } finally {
         setLoading(false);
       }
     })();
   }, []);
+
+  // Anima troca do símbolo
+  useEffect(() => {
+    if (!charRef.current) return;
+    gsap.fromTo(charRef.current,
+      { opacity: 0, y: -30, scale: 0.8 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: 'power2.out' }
+    );
+    setTimeout(() => inRef.current?.focus(), 100);
+  }, [current]);
 
   const nextRound = () => {
     setInput('');
@@ -41,7 +61,6 @@ export default function KanaTypingGame() {
     if (pool.length) {
       const rand = Math.floor(Math.random() * pool.length);
       setCurrent(pool[rand]);
-      setTimeout(() => inRef.current?.focus(), 0);
     }
   };
 
@@ -51,7 +70,12 @@ export default function KanaTypingGame() {
 
     const isHit = input.trim().toLowerCase() === current.romaji;
 
-    // log the attempt
+    if (!muted) {
+      const audio = isHit ? correctAudioRef.current : wrongAudioRef.current;
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+    }
+
     api.post('/kanaattempts', {
       kanaId:  current.id,
       correct: isHit
@@ -61,26 +85,18 @@ export default function KanaTypingGame() {
     nextRound();
   };
 
-  const handleStop = () => {
-    setShowResults(true);
-  };
-
+  const handleStop = () => setShowResults(true);
   const handleTryAgain = () => {
     setScore(0);
     setRounds(0);
     setShowResults(false);
-    // pick fresh
     if (pool.length) {
-      const rand = Math.floor(Math.random() * pool.length);
-      setCurrent(pool[rand]);
+      setCurrent(pool[Math.floor(Math.random() * pool.length)]);
       setInput('');
-      setTimeout(() => inRef.current?.focus(), 0);
     }
   };
-
-  const handleChangeKana = () => {
-    navigate('/kana');
-  };
+  const handleChangeKana = () => navigate('/kana');
+  const toggleMute = () => setMuted(m => !m);
 
   if (loading) return <p className="game-msg">Loading…</p>;
   if (!current) return (
@@ -91,34 +107,73 @@ export default function KanaTypingGame() {
   );
 
   return (
-    <>
-      <div className="typing-game-wrapper">
-        <h2>Kana Typing Drill</h2>
 
+    <div className="kana-typing-game">
+      
+     {/* Instruções rápidas */}
+      <div className="container-left">
+       <h1 className='heading-title'>Kana Typing Game</h1> 
+       <p className="heading-text">
+  As each kana character appears on screen, type its romaji equivalent using your keyboard. Focus on accuracy first, then speed—try to beat your previous best time! This exercise will help you reinforce kana-to-romaji mappings and improve your Japanese reading skills. Ready to test yourself? Let’s go!
+</p>
+      </div>
+
+      <div className="container-right">
+    
+
+<div className='info-quiz-left'>
+
+
+      <div className="score">
+          Score {score} / {rounds}
+        </div>
+
+      <div
+          className="character-box"
+          ref={charRef}
+        >
+          {current.kana}
+        </div>
+</div>
+
+
+<div className='info-quiz-settings'>
         <div className="controls">
           <button className="stop-btn" onClick={handleStop}>
             Stop Quiz
           </button>
+          <button
+            className="mute-btn"
+            onClick={toggleMute}
+       
+          >
+            {muted ? '🔇 Unmute' : '🔊 Mute'}
+          </button>
         </div>
 
-        <div className="score">
-          Score {score} / {rounds}
-        </div>
-
-        <div className="character-box">{current.kana}</div>
-
-        <form onSubmit={handleSubmit}>
-          <input
+<div className='info-quiz-data'>
+        
+       
+        <form className='form-input' onSubmit={handleSubmit}>
+          <Input
             ref={inRef}
             type="text"
             value={input}
             onChange={e => setInput(e.target.value)}
             placeholder="type romaji here"
             autoFocus
+            className="input-field"
+           
+            icon={MdOutlineQuiz}
+            
           />
           <button type="submit">Enter</button>
         </form>
       </div>
+
+
+
+    </div></div>
 
       {showResults && (
         <div className="modal-overlay">
@@ -135,6 +190,6 @@ export default function KanaTypingGame() {
           </div>
         </div>
       )}
-    </>
+      </div> 
   );
 }

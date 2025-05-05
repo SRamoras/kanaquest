@@ -28,7 +28,7 @@ export default function Footer({
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="footer">
+    <footer className="footer" id='contact'>
       <div className="footer__grid">
         {/* Logo & Descrição */}
         <div className="footer__brand">
@@ -39,7 +39,7 @@ export default function Footer({
           KanaQuest empowers you to master new languages through engaging, game-like experiences and bite-sized lessons designed to keep you motivated every step of the way.
           </p>
         </div>
-
+      
         {/* Navegação */}
         <nav className="footer__nav" aria-label="Navegação do Rodapé">
           <h4 className="footer__title">Get Started</h4>
