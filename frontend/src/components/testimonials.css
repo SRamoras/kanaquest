@@ -84,6 +84,7 @@ color: #000;
   min-width: 600px;
   height: 400px;
   background: #ebede7;
+  border-radius: var(--radius);
   display: flex;
   flex-direction: column;
   justify-content: center;

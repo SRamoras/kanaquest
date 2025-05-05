@@ -25,7 +25,6 @@ export default function ImagesSection() {
     const cardEls = gsap.utils.toArray('.images-section .card');
 
     cardEls.forEach((card, i) => {
-      // animação do card com delay baseado em i
       gsap.fromTo(
         card,
         { y: 50, autoAlpha: 0, filter: 'blur(5px)' },
@@ -35,7 +34,7 @@ export default function ImagesSection() {
           filter: 'blur(0px)',
           duration: 1,
           ease: 'power2.out',
-          delay: i * 0.3, // intervalo de 0.3s entre cada card
+          delay: i * 0.3,
           scrollTrigger: {
             trigger: card,
             start: 'top 90%',
@@ -44,7 +43,6 @@ export default function ImagesSection() {
         }
       );
 
-      // animação do overlay com delay ligeiramente maior
       const overlay = card.querySelector('.card-overlay');
       gsap.fromTo(
         overlay,
@@ -54,7 +52,7 @@ export default function ImagesSection() {
           autoAlpha: 1,
           duration: 0.6,
           ease: 'power2.out',
-          delay: i * 0.3 + 0.1, // começa logo após o card
+          delay: i * 0.3 + 0.1,
           scrollTrigger: {
             trigger: card,
             start: 'top 85%',
@@ -64,7 +62,6 @@ export default function ImagesSection() {
       );
     });
 
-    // refresca em caso de carregamento já em vista
     ScrollTrigger.refresh();
   }, []);
 
@@ -83,9 +80,15 @@ export default function ImagesSection() {
             <div className="card" key={i}>
               <div className="card-image-wrapper">
                 <img src={card.src} alt={card.title} className="card-image" />
+
                 <div className="card-overlay">
-                  <h3 className="card-title">{card.title}</h3>
-                  <p className="card-description">{card.description}</p>
+                  {/* Wrapper para centralizar título e descrição */}
+                  <div className="overlay-content">
+                    <h3 className="card-title">{card.title}</h3>
+                    <p className="card-description">{card.description}</p>
+                  </div>
+
+                  {/* Botão sempre no final */}
                   <div className="button-container">
                     <Button variant="secondary">{card.buttonText}</Button>
                   </div>

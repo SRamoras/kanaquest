@@ -41,6 +41,7 @@ backdrop-filter: blur(4px); /* Optional: adds a blur effect */
   align-items: center;
   display: flex;
   z-index: 22;
+  border-radius: var(--radius);
   flex-direction: column;
   gap: 10px;
 }

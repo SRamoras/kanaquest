@@ -12,6 +12,7 @@
     height: 700px;
     object-fit: cover;
     width: 40%;
+    border-radius: var(--radius);
   }
   .image-text-content h2, 
   .image-text-content p {

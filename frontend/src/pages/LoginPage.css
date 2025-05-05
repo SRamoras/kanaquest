@@ -1,8 +1,72 @@
 .login-page-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   background-color: var(--clr-background);
+  padding: 0 10%;
+  height: 100vh;
+  gap: 10%;
+  font-family: "Manrope", sans-serif;
+}
+
+.login-title {
+  font-family: "Manrope", sans-serif;
+}
+.login-page-left {
+width: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+height: 100vh;
+}
+
+.login-page-right {
+  width: 50%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.img-container-login {
+  width: 100%;
+  height: 60%;
+}
+.login-page-right img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+
+
+
+ 
+  border-radius: var(--radius);
+
+}
+
+
+
+.login-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  height: 60%;
+  background: #ebede749;
+  border-radius: var(--radius);
+   align-items: center;
+  justify-content: center;
+}
+
+
+
+.register-text {
+margin-top: 10px;
 }

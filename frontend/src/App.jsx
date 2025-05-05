@@ -18,12 +18,10 @@ export default function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/Login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/register" element={<SignupPage />} />
           <Route path="/kana" element={<QuizPage />} />
           <Route path="/quiz" element={<KanaTypingGame />} />
           <Route path="/profile" element={<ProfilePage />} />
-
-          
           {/* Adicione mais rotas conforme necessário */}
         </Routes>
       </Layout>
