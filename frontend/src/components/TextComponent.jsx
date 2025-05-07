@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SplitType from 'split-type';
 import Lenis from '@studio-freight/lenis'; // certifique-se de instalar: npm install @studio-freight/lenis
-import './Textcomponent.css';
+import './TextComponent.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
