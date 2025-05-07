@@ -39,3 +39,18 @@
     color: #666;
   }
   
+  @media (max-width: 768px) {
+    .image-text-wrapper {
+      flex-direction: column;
+      width: 100%;
+      gap: 10px;
+      padding: 0 5%;
+    }
+    .image-text-img {
+      width: 100%;
+      height: 400px;
+    }
+    .image-text-content {
+      width: 100%;
+    }
+  }

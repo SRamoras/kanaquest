@@ -17,7 +17,9 @@
   user-select: none;
   transition: border-color .2s;
 }
+
 .cell.known  { border-color: green;background-color: rgba(144, 238, 144, 0.212); }
+
 .cell.placeholder { border: none; cursor: default; }
 
 .kana { line-height: 1; }
@@ -29,4 +31,40 @@
   font-size: .75rem;
   padding: 2px 8px 3px;
   border-radius: 8px 8px 0 0;
+}
+
+@media (max-width: 768px) {
+  /* Esconde o nav e mostra o hamburger */
+  .menu-toggle {
+    display: block;
+  }
+  .nav-links {
+    position: absolute;
+    top: 80px; /* logo + header height */
+    left: 0;
+    right: 0;
+    background: #F3F1EE;
+    flex-direction: column;
+    gap: 0;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height var(--transition-medium) ease;
+  }
+  /* Quando aberto, ajusta a altura para comportar os itens */
+  .nav-links.open {
+    max-height: 300px; /* ou ajuste conforme quantos links tiver */
+  }
+  .nav-links a,
+  .nav-links .nav-link-button {
+    width: 100%;
+    padding: var(--spacing-md);
+    border-top: 1px solid var(--clr-border);
+    text-align: center;
+  }
+}
+@media (max-width: 768px) {
+  .kana-grid {
+  grid-template-columns: repeat(5, 72px);
+  }
+
 }

@@ -50,7 +50,7 @@ body {
 
 .heading-title {
   font-size: 72px;
-  width: 900px;
+  width: 43vw;
   color: var(--clr-primary);
   margin-bottom: var(--spacing-md);
   font-family: "Manrope", sans-serif;
@@ -65,5 +65,19 @@ body {
   margin-bottom: var(--spacing-md);
   font-family: "Manrope", sans-serif;
   font-weight: 300;
-  width: 1000px;
+  width: 50vw;
+}
+
+
+@media (max-width: 768px) {
+  .heading-title {
+    font-size: 38px;
+    width: 100%;
+    line-height: 48px;
+  }
+
+  .heading-text {
+    font-size: 1.2rem;
+    width: 100%;
+  }
 }

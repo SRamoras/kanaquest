@@ -8,7 +8,7 @@ import QuizPage from './pages/QuizPage';
 import SignupPage from './pages/SignupPage';
 import KanaTypingGame from './pages/KanaTypingGame';
 import ProfilePage from './pages/ProfilePage';
-
+import LearnPage from './pages/LearnPage';
 import './index.css';
 
 const router = createBrowserRouter([
@@ -22,6 +22,7 @@ const router = createBrowserRouter([
       { path: 'kana', element: <QuizPage /> },
       { path: 'quiz', element: <KanaTypingGame /> },
       { path: 'profile', element: <ProfilePage /> },
+      { path: 'learn', element: <LearnPage /> },
       // … outras rotas
     ],
   },

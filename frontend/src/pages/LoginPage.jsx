@@ -94,7 +94,7 @@ export default function LoginPage() {
             <Link to="/register" className="register-link">
               Register here
             </Link>
-            .
+            
           </p>
         </form>
         </div>     

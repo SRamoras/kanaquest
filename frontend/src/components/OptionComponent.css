@@ -105,3 +105,10 @@
   background: var(--clr-secondary);
   transform: scale(1.05);
 }
+
+
+@media (max-width: 768px) {
+.images-section{
+  padding: 0 5%;
+}
+}

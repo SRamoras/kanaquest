@@ -1,8 +1,8 @@
 // src/components/Navbar.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { FiChevronDown } from 'react-icons/fi';
-import { jwtDecode } from 'jwt-decode';          // <-- instale: npm install jwt-decode
+import { FiChevronDown, FiMenu, FiX } from 'react-icons/fi';
+import { jwtDecode } from 'jwt-decode';         // IMPORT CORRETO: default export
 import './Navbar.css';
 import Button from './atoms/Button';
 import Logo from '/images/logo.png';
@@ -11,9 +11,10 @@ import api from '../services/api';
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const location = useLocation();  
+  const location = useLocation();
   const [user, setUser] = useState({ token: null, email: null });
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const dropdownRef = useRef();
 
   // 1) Carrega token e busca email sempre que a rota muda
@@ -33,28 +34,24 @@ export default function Navbar() {
         handleLogout();
       }
     })();
-  }, [location.pathname]); // <–– re-executa após qualquer navigate
+  }, [location.pathname]);
 
-  // 2) Agenda logout justo no exp do JWT
+  // 2) Agenda logout no exp do JWT
   useEffect(() => {
     if (!user.token) return;
     let payload;
     try {
-      payload = jwtDecode(user.token);       // { exp: <timestamp em segundos>, ... }
+      payload = jwtDecode(user.token); // usa default import
     } catch {
-      // se não for um JWT válido
       handleLogout();
       return;
     }
     const msLeft = payload.exp * 1000 - Date.now();
     if (msLeft <= 0) {
-      // já expirou
       handleLogout();
       return;
     }
-    const timerId = setTimeout(() => {
-      handleLogout();
-    }, msLeft);
+    const timerId = setTimeout(handleLogout, msLeft);
     return () => clearTimeout(timerId);
   }, [user.token]);
 
@@ -74,80 +71,66 @@ export default function Navbar() {
     setUser({ token: null, email: null });
     navigate('/login');
   };
-  const scrollToFeatures = e => {
+
+  const scrollToId = (id, offset = 0) => e => {
     e.preventDefault();
-    const el = document.getElementById('features');
+    const el = document.getElementById(id);
     if (!el) return;
-    const offset = 120;
-    // posição do topo da página até o elemento
-    const elementTop = el.getBoundingClientRect().top + window.pageYOffset;
-    const targetScroll = elementTop - offset;
-    window.scrollTo({ top: targetScroll, behavior: 'smooth' });
-    // atualiza o hash sem pular de verdade de página
-    window.history.pushState(null, '', '#features');
+    const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
+    window.history.pushState(null, '', `#${id}`);
+    setMenuOpen(false);
   };
 
-  const scrollToContact = e => {
-    e.preventDefault();
-    const el = document.getElementById('contact');
-    if (!el) return;
-
-    // posição do topo da página até o elemento
-    const elementTop = el.getBoundingClientRect().top + window.pageYOffset;
-    const targetScroll = elementTop;
-    window.scrollTo({ top: targetScroll, behavior: 'smooth' });
-    // atualiza o hash sem pular de verdade de página
-    window.history.pushState(null, '', '#contact');
-  };
-  
   const handleHomeClick = e => {
     if (location.pathname === '/') {
-      e.preventDefault(); // cancela o Link padrão
+      e.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      setMenuOpen(false);
     }
-    // se não estiver em '/', deixa o <Link> navegar normalmente
   };
 
   return (
     <header className="navbar">
       <div className="container">
-        <nav className="nav-links">
-        <Link to="/" onClick={handleHomeClick}>Home</Link>
-          <button
-        className="nav-link-button"
-        onClick={scrollToFeatures}
-        style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
-      >
-        Features
-      </button>
-      <button
-        className="nav-link-button"
-        onClick={scrollToContact}
-        style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
-      >
-        Contact
-      </button>
+       
+
+        {/* Botão Hamburger */}
+        <button
+          className="menu-toggle"
+          onClick={() => setMenuOpen(o => !o)}
+          aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
+        >
+          {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+        </button>
+
+        <nav className={`nav-links ${menuOpen ? 'open' : ''}`}>
+          <Link to="/" onClick={handleHomeClick}>Home</Link>
+          <button className="nav-link-button" onClick={scrollToId('features', 120)}>
+            Features
+          </button>
+          <Link to="/learn">Learn</Link>
+          <button className="nav-link-button" onClick={scrollToId('contact')}>
+            Contact
+          </button>
         </nav>
-
-        <img className="logo" src={Logo} alt="Kana Quest Logo" />
-
-        { !user.token ? (
+        <Link to="/" onClick={handleHomeClick} className="logo-link">
+          <img className="logo" src={Logo} alt="Kana Quest Logo" />
+        </Link>
+        {!user.token ? (
           <Button variant="primary" onClick={() => navigate('/login')}>
             Start Now
           </Button>
         ) : (
           <div className="user-menu" ref={dropdownRef}>
-            <button
-              className="user-button"
-              onClick={() => setDropdownOpen(o => !o)}
-            >
+            <button className="user-button" onClick={() => setDropdownOpen(o => !o)}>
               <img src={DefaultAvatar} alt="Avatar" className="avatar" />
               <span className="user-email">
                 {user.email ?? 'Carregando…'}
               </span>
               <FiChevronDown className="chevron" />
             </button>
-            { dropdownOpen && (
+            {dropdownOpen && (
               <ul className="dropdown">
                 <li>
                   <Link to="/kana" onClick={() => setDropdownOpen(false)}>
@@ -160,7 +143,7 @@ export default function Navbar() {
                   </Link>
                 </li>
                 <li>
-                  <button style={{color:"red"}} onClick={handleLogout}>
+                  <button style={{ color: 'red' }} onClick={handleLogout}>
                     Logout
                   </button>
                 </li>

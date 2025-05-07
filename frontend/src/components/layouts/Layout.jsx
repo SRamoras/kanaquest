@@ -1,29 +1,26 @@
 // src/components/layouts/Layout.jsx
 import React, { useEffect, useState } from 'react';
-import {Outlet, useLocation } from 'react-router-dom';
+import { Outlet, ScrollRestoration, useLocation } from 'react-router-dom';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
-import Loader from './Loader';               // ← verifique que Loader.jsx está em src/components/Loader.jsx
-import './Layout.css';
+import Loader from './Loader';
 import { initSmoothScroll, destroySmoothScroll } from '../smoothScroll';
+import './Layout.css';
 
-export default function Layout({ children }) {
+export default function Layout() {
   const location = useLocation();
   const [showLoader, setShowLoader] = useState(false);
 
-  // inicializa o smooth scroll apenas uma vez
+  // 1) Inicializa Lenis + override window.scrollTo
   useEffect(() => {
     initSmoothScroll({ duration: 1.2 });
     return () => destroySmoothScroll();
   }, []);
 
-  // a cada mudança de rota, mostra o Loader por pelo menos 2s
+  // 2) Loader em cada mudança de rota
   useEffect(() => {
     setShowLoader(true);
-    const timer = setTimeout(() => {
-      setShowLoader(false);
-    }, 100);
-
+    const timer = setTimeout(() => setShowLoader(false), 100);
     return () => clearTimeout(timer);
   }, [location.pathname]);
 
@@ -31,12 +28,14 @@ export default function Layout({ children }) {
     <div className="layout">
       <Navbar />
 
-      {/* enquanto estiver carregando, mostra só o Loader */}
+      {/* ← ÚNICA instância aqui, no root */}
+      <ScrollRestoration />
+
       {showLoader ? (
         <Loader />
       ) : (
         <main className="layout-main">
-       <Outlet />
+          <Outlet />
         </main>
       )}
 

@@ -54,3 +54,41 @@ justify-content: center;
   display: block;
   border-radius: var(--radius);
 }
+
+
+
+
+
+/* ====== Mobile (até 768px) ====== */
+@media (max-width: 768px) {
+  .heading {
+    padding-top: 4rem;
+    gap: 2rem;
+    padding: 5%;
+    padding-top:10vh ;
+  }
+
+
+
+  .heading-content {
+    gap: 0.75rem;
+  }
+
+  .heading-image-wrapper {
+
+  }
+
+  .heading-image {
+    width: 100%;          /* ocupa toda a largura disponível */
+    border-radius: var(--radius);
+    padding: 0;
+    height: 40vh;
+    object-fit: cover;
+  }
+
+  .heading-button {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+}
+

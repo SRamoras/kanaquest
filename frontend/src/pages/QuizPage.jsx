@@ -84,7 +84,7 @@ export default function AlphabetTabs() {
             className={t.key === active ? 'tab active' : 'tab'}
             onClick={() => setActive(t.key)}
           >
-            {t.label}
+           <p>{t.label}</p> 
           </button>
         ))}
       </div>

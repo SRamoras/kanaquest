@@ -113,3 +113,48 @@ color: #000;
   font-size: 0.9rem;
   color: #777;
 }
+
+
+
+
+
+/* ====== Mobile (até 768px) ====== */
+@media (max-width: 768px) {
+  .testimonials-header {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0 5%;
+    text-align: center;
+  }
+
+  .testimonials-title h2,
+  .testimonials-title p {
+    text-align: center; 
+  }
+
+  .testimonials-controls {
+    justify-content: center;
+  }
+
+  .testimonials-track {
+    gap: 16px;
+    padding: 0 5%;
+  }
+
+  .testimonial-card {
+    min-width: 300px;       /* cards menores */
+    height: auto;           /* altura fluida conforme o conteúdo */
+    padding: 1.5rem;
+    gap: 1rem;
+  }
+
+  .testimonial-quote {
+    font-size: 1rem;
+    max-width: 28ch;
+  }
+
+  .testimonial-name {
+    font-size: 0.8rem;
+  }
+}
+

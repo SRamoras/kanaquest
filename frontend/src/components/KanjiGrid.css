@@ -23,3 +23,16 @@
   .cell1.known { border-color: green;background-color: rgba(144, 238, 144, 0.212); }
   
   .char { line-height: 1; }
+
+
+  @media (max-width: 768px) {
+    .kanji-grid {
+      grid-template-columns: repeat(5, 72px);
+    }
+
+    .roman {
+
+      bottom: -10px;
+    }
+  }
+  

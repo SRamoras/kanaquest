@@ -63,3 +63,55 @@ backdrop-filter: blur(4px); /* Optional: adds a blur effect */
   font-family: "Manrope", sans-serif;
   width: 70%;
 }
+/* ====== Mobile (até 768px) ====== */
+@media (max-width: 768px) {
+  .background-wrapper {
+    height: 120vh;       /* reduz um pouco a altura */
+    margin: 8% 0;
+  }
+
+  .text-containers {
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+
+  .background-overlay {
+    width: 90%;          /* ocupa quase toda a largura */
+    min-height: auto;
+    padding: 1rem;
+  }
+
+  .background-title {
+    font-size: 1.75rem;
+    width: 100%;
+  }
+
+  .background-subtitle {
+    font-size: 1rem;
+    width: 100%;
+  }
+}
+
+/* ====== Mobile estreito (até 480px) ====== */
+@media (max-width: 480px) {
+
+
+  .text-containers {
+    gap: 1.5rem;
+  }
+
+  .background-overlay {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: calc(var(--radius) / 2);
+  }
+
+  .background-title {
+    font-size: 1.5rem;
+  }
+
+  .background-subtitle {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+}

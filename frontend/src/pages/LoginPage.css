@@ -69,3 +69,28 @@ height: 100vh;
 .register-text {
 margin-top: 10px;
 }
+
+
+
+
+@media (max-width: 768px) {
+  .login-page-container {
+    flex-direction: column;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+    padding-left: 5%;
+    padding-right: 5%;
+    align-items: center;
+  }
+  .login-page-left {
+    width: 100%;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+   align-items: center;
+  }
+
+  .login-page-right {
+display: none;
+  }
+}

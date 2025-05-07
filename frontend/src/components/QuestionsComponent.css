@@ -105,3 +105,16 @@ flex-direction: column;
     text-align: start;
     width: 70%;
   }
+
+  @media (max-width: 768px) {
+    .questions-container{
+      flex-direction: column;
+      padding: 0 5%;
+    }
+
+.questions-header div p, .questions-header div h2  {
+    text-align: center;
+    width: 100%;
+  }
+
+}

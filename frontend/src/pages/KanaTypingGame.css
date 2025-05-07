@@ -5,10 +5,10 @@
   }
   
   .character-box {
-    font-size: 5rem;
+    font-size: 6rem;
     border: 3px solid var(--clr-primary);
-    width: 140px;
-    height: 140px;
+    width: 180px;
+    height: 180px;
     margin: 1rem auto;
     display: flex;
     align-items: center;
@@ -19,7 +19,7 @@
   .form-input {
     display: flex;
     justify-content: space-between;
-    gap: 8px;
+    gap: 10px;
     width: 100%;
     align-items: center;
 
@@ -50,6 +50,7 @@
   align-items: center;
   width: 100%;
 
+  
 }
 
 .mute-btn {
@@ -70,7 +71,9 @@
 .container-left h1, .container-left p {
   text-align: center;
 }
-
+.stop-btn{
+  width: 100%;
+}
 .container-left {
   display: flex;
   flex-direction: column;
@@ -83,20 +86,23 @@
   flex-direction: column;
   justify-content: center;
   height: 100%;
-  padding: 30px;
-  width: 70%;
+
   gap: 30px;
-  background: #f0f0f0;
+
   border-radius: var(--radius);
   font-family: "Manrope", sans-serif;
 }
-
+.score {
+  font-family: "Manrope", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
 .info-quiz-data {
   display: flex;
   flex-direction: column;
   align-items: start;
   justify-content: center;
-  gap: 10px;
+
   width: 100%;
 }
 
@@ -104,9 +110,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50%;
+  flex-direction: column;
+  gap: 30px;
   padding: 30px;
-  background: #ebede7;
+  background: #ebede749;
   border-radius: var(--radius);
 }
 
@@ -122,3 +129,124 @@
 }
 
 
+
+
+
+
+
+
+
+
+/* overlay cobre tudo, aplica blur, captura eventos de scroll */
+.modal-overlay {
+  position: fixed;
+  inset: 0;                       /* top/right/bottom/left = 0 */
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  
+  /* animação de fade-in */
+  animation: fadeInOverlay 0.3s ease-out forwards;
+
+  /* impede qualquer scroll remanescente */
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+.score-rounds {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.final-score {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* animação do conteúdo */
+.modal-content {
+  background: #fff;
+  padding: 2rem;
+  gap: 40px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  font-family: "Manrope", sans-serif;
+
+
+  /* slide-down + fade-in */
+  animation: slideDown 0.3s ease-out forwards;
+}
+
+/* keyframes para overlay */
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* keyframes para conteúdo */
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* botões e título */
+.modal-content h3 {
+  margin-top: 0;
+  animation: slideDown 0.4s ease-out forwards;
+}
+.modal-buttons {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+.modal-buttons button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-buttons button:first-child {
+}
+
+.modal-buttons button:last-child {
+  background: #38b3df;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .form-input {
+  flex-direction: column;
+  }
+  .modal-content {
+    width: 90%;
+    padding: 1rem;
+  }
+  .button-quiz-container {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+  }
+}

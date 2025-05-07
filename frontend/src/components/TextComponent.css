@@ -26,7 +26,7 @@
   .reveal-type {
     font-size: 36px;  /* Reduz o tamanho da fonte */
     line-height: 44px; /* Ajusta o espaçamento entre as linhas */
-    padding: 0 20px;   /* Espaçamento horizontal */
+    padding: 0 5%;   /* Espaçamento horizontal */
     word-break: normal;
     overflow-wrap: normal;
     hyphens: none;

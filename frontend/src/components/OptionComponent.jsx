@@ -1,9 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+// src/components/ImagesSection.jsx
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 import TextCenter from './TextCenter';
 import './OptionComponent.css';
 import Img1 from '/images/learn.jpg';
 import Img2 from '/images/puzzle.jpg';
-import Img3 from '/images/flashcards.webp';
+import Img3 from '/images/55.jpg';
 import Divider from './atoms/Divider';
 import Button from './atoms/Button';
 import DividerLine from './atoms/DividerLine';
@@ -14,11 +17,53 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function ImagesSection() {
   const sectionRef = useRef(null);
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // verifica token e expiração igual ao Navbar
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setIsLoggedIn(false);
+      return;
+    }
+    try {
+      const { exp } = jwtDecode(token);
+      if (exp * 1000 > Date.now()) {
+        setIsLoggedIn(true);
+      } else {
+        // token expirado
+        localStorage.removeItem('token');
+        setIsLoggedIn(false);
+      }
+    } catch {
+      localStorage.removeItem('token');
+      setIsLoggedIn(false);
+    }
+  }, [/* roda só uma vez */]);
 
   const cards = [
-    { src: Img2, title: 'Quiz',       description: 'Test your kana skills…', buttonText: 'Start Quiz' },
-    { src: Img1, title: 'Learn Fast', description: 'Accelerate your kana…',  buttonText: 'Start Learning' },
-    { src: Img3, title: 'Flashcards', description: 'Reinforce your memory…', buttonText: 'Review Flashcards' },
+    {
+      src: Img2,
+      title: 'Quiz',
+      description: 'Test your kana skills…',
+      buttonText: 'Start Quiz',
+      onClick: () => navigate(isLoggedIn ? '/kana' : '/login'),
+    },
+    {
+      src: Img1,
+      title: 'Learn Fast',
+      description: 'Accelerate your kana…',
+      buttonText: 'Start Learning',
+      onClick: () => navigate('/learn'),
+    },
+    {
+      src: Img3,
+      title: 'Kana',
+      description: 'Select your Kana',
+      buttonText: 'Review Flashcards',
+      onClick: () => navigate(isLoggedIn ? '/kana' : '/login'),
+    },
   ];
 
   useEffect(() => {
@@ -39,7 +84,7 @@ export default function ImagesSection() {
             trigger: card,
             start: 'top 90%',
             toggleActions: 'play none none none',
-          }
+          },
         }
       );
 
@@ -57,7 +102,7 @@ export default function ImagesSection() {
             trigger: card,
             start: 'top 85%',
             toggleActions: 'play none none none',
-          }
+          },
         }
       );
     });
@@ -77,18 +122,22 @@ export default function ImagesSection() {
 
         <div className="card-grid">
           {cards.map((card, i) => (
-            <div className="card" key={i}>
+            <div
+              className="card"
+              key={i}
+              onClick={card.onClick}
+              role="button"
+              tabIndex={0}
+              onKeyPress={(e) => e.key === 'Enter' && card.onClick()}
+            >
               <div className="card-image-wrapper">
                 <img src={card.src} alt={card.title} className="card-image" />
 
                 <div className="card-overlay">
-                  {/* Wrapper para centralizar título e descrição */}
                   <div className="overlay-content">
                     <h3 className="card-title">{card.title}</h3>
                     <p className="card-description">{card.description}</p>
                   </div>
-
-                  {/* Botão sempre no final */}
                   <div className="button-container">
                     <Button variant="secondary">{card.buttonText}</Button>
                   </div>
