@@ -4,8 +4,8 @@ import axios from 'axios';
 // Usa variável de ambiente VITE_API_URL, definida em .env para dev e em Vercel para prod
 const api = axios.create({
   baseURL: import.meta.env.DEV
-    ? 'http://localhost:5000/api'
-    : import.meta.env.VITE_API_URL  // Ex: "https://seu-projeto.vercel.app/api"
+    ? import.meta.env.VITE_API_URL        // → http://localhost:5000/api em dev
+    : '/api'                              // → chama https://kanaquest-tau.vercel.app/api em prod
 });
 
 // Adiciona token de autorização, se existir
