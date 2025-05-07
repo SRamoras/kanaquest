@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FiChevronDown, FiMenu, FiX } from 'react-icons/fi';
 import { jwtDecode } from 'jwt-decode';         // IMPORT CORRETO: default export
-import './NavBar.css';
+import './Navbar.css';
 import Button from './atoms/Button';
 import Logo from '/images/logo.png';
 import DefaultAvatar from '/images/default.jpg';
