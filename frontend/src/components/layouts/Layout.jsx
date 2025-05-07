@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, ScrollRestoration, useLocation } from 'react-router-dom';
 
-import Navbar from '../NavBar.jsx';
+import NavBar from '../NavBar.jsx';
 import Footer from '../Footer.jsx';
 import Loader from './Loader';
 import { initSmoothScroll, destroySmoothScroll } from '../smoothScroll';
@@ -27,7 +27,7 @@ export default function Layout() {
 
   return (
     <div className="layout">
-      <Navbar />
+      <NavBar />
 
       {/* ← ÚNICA instância aqui, no root */}
       <ScrollRestoration />
