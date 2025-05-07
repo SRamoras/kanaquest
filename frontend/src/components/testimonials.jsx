@@ -1,6 +1,6 @@
 // src/components/Testimonials.jsx
 import React, { useRef, useState, useEffect } from 'react';
-import './Testimonials.css';
+import './testimonials.css';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
