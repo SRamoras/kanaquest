@@ -1,8 +1,9 @@
 // src/components/layouts/Layout.jsx
 import React, { useEffect, useState } from 'react';
 import { Outlet, ScrollRestoration, useLocation } from 'react-router-dom';
-import Navbar from '../Navbar';
-import Footer from '../Footer';
+
+import Navbar from '../Navbar.jsx';
+import Footer from '../Footer.jsx';
 import Loader from './Loader';
 import { initSmoothScroll, destroySmoothScroll } from '../smoothScroll';
 import './Layout.css';
