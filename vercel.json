@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "backend/index.js",
+      "src": "backend/src/index.js",
       "use": "@vercel/node"
     },
     {
@@ -11,15 +11,18 @@
       "config": { "distDir": "dist" }
     }
   ],
-  "routes": [
-
-    { "src": "/api/(.*)", "dest": "backend/index.js" },
-    { "src": "/game",      "dest": "backend/index.js" },
-
-
-    { "handle": "filesystem" },
-
-
-    { "src": "/.*",        "dest": "/index.html" }
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/backend/src/index.js"
+    },
+    {
+      "source": "/game",
+      "destination": "/backend/src/index.js"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }
