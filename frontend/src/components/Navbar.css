@@ -133,7 +133,11 @@
   .dropdown li {
     list-style: none;
   }
-  
+  .login-button-container {
+    min-width: 300px;
+    display: flex;
+    justify-content: flex-end;
+  }
   .dropdown a,
   .dropdown button {
     display: block;

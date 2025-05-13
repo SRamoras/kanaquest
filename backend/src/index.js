@@ -1,5 +1,6 @@
 // src/index.js
-require('dotenv').config();
+require('dotenv').config();                // Carrega o .env antes de tudo
+
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -8,41 +9,23 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const kanaRoutes = require('./routes/kana');
 const userKnownKanaRoutes = require('./routes/userKnownKana');
-const kanaAttemptsRoutes = require('./routes/kanaAttempts');
-const kanaStatsRoutes = require('./routes/kanaStats');
-
+const kanaattemptsRoutes = require('./routes/kanaAttempts')
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Whitelist de origens permitidas
-const whitelist = [
-  'http://localhost:5173',              // front-end em dev
-  process.env.CLIENT_URL                  // front-end em prod (definido no .env da produção)
-];
-
-// Middlewares
+// Middleware para JSON, CORS e arquivos estáticos
 app.use(express.json());
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      // permite requests sem origin (Postman, curl)
-      if (!origin || whitelist.includes(origin)) {
-        return callback(null, true);
-      }
-      callback(new Error(`Origin ${origin} not allowed by CORS`));
-    },
-    credentials: true
-  })
-);
+app.use(cors({ origin: 'http://localhost:5173' })); // Ajuste o origin conforme seu front-end
 app.use(express.static(path.join(__dirname, '../public')));
 
 // Rotas de API
-app.use('/api/kanaStats', kanaStatsRoutes);
+app.use('/api/kanaStats', require('./routes/kanaStats'));
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/kana', kanaRoutes);
 app.use('/api/userknownkana', userKnownKanaRoutes);
-app.use('/api/kanaattempts', kanaAttemptsRoutes);
+app.use('/api/kanaattempts', kanaattemptsRoutes);
+
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -54,13 +37,12 @@ app.get('/game', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/game.html'));
 });
 
-// Tratamento de erros
+// Middleware de tratamento de erro
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: err.message });
 });
 
-// Inicia servidor
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server rodando na porta ${PORT}`);
 });

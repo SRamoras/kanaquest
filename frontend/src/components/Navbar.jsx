@@ -118,9 +118,10 @@ export default function Navbar() {
           <img className="logo" src={Logo} alt="Kana Quest Logo" />
         </Link>
         {!user.token ? (
-          <Button variant="primary" onClick={() => navigate('/login')}>
+          <div className="login-button-container">
+            <Button variant="primary" onClick={() => navigate('/login')}>
             Start Now
-          </Button>
+          </Button></div>
         ) : (
           <div className="user-menu" ref={dropdownRef}>
             <button className="user-button" onClick={() => setDropdownOpen(o => !o)}>
