@@ -20,8 +20,8 @@ app.use(express.json());
 
 // CORS — usa SEMPRE o mesmo allowedOrigins
 const allowedOrigins = [
-  process.env.CLIENT_URL,    // produção
-  'http://localhost:5173',   // Vite dev
+  process.env.CLIENT_URL,   
+  'http://localhost:5173',   
   'http://localhost:3000',
   'https://kanaquest-tau.vercel.app/'
 ];
