@@ -18,9 +18,12 @@
       "src": "/api/(.*)",
       "dest": "backend/src/index.js"
     },
-    { 
-      "handle": "filesystem"
+    {
+      "src": "/(.*\\.(?:js|css|map|json|png|jpg|jpeg|svg|ico))$",
+      "dest": "frontend/$1"
     },
+
+
     {
       "src": "/(.*)",
       "dest": "frontend/index.html"
