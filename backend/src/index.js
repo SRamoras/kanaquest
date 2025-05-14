@@ -27,14 +27,15 @@ app.use('/api/userknownkana', userKnownKanaRoutes);
 app.use('/api/kanaattempts', kanaattemptsRoutes);
 
 
-// Health check
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK' });
-});
+
 
 // Rota do jogo
 app.get('/game', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/game.html'));
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
 // Middleware de tratamento de erro
@@ -46,3 +47,5 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server rodando na porta ${PORT}`);
 });
+
+module.exports = app;

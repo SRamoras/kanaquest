@@ -11,18 +11,15 @@
       "config": { "distDir": "dist" }
     }
   ],
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/backend/src/index.js"
-    },
-    {
-      "source": "/game",
-      "destination": "/backend/src/index.js"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+  "routes": [
+
+    { "src": "/api/(.*)", "dest": "backend/src/index.js" },
+    { "src": "/game",      "dest": "backend/src/index.js" },
+
+
+    { "handle": "filesystem" },
+
+  
+    { "src": "/(.*)", "dest": "frontend/dist/index.html" }
   ]
 }
