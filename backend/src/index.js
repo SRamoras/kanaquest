@@ -1,49 +1,66 @@
 // src/index.js
-require('dotenv').config();                // Carrega o .env antes de tudo
 
+require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
-const path = require('path');
+const cors    = require('cors');
+const path    = require('path');
 
-const authRoutes = require('./routes/auth');
-const userRoutes = require('./routes/users');
-const kanaRoutes = require('./routes/kana');
+const authRoutes          = require('./routes/auth');
+const userRoutes          = require('./routes/users');
+const kanaRoutes          = require('./routes/kana');
 const userKnownKanaRoutes = require('./routes/userKnownKana');
-const kanaattemptsRoutes = require('./routes/kanaAttempts')
-const app = express();
+const kanaAttemptsRoutes  = require('./routes/kanaAttempts');
+const kanaStatsRoutes     = require('./routes/kanaStats');
+
+const app  = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware para JSON, CORS e arquivos estáticos
+// Body parser
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:5173' })); // Ajuste o origin conforme seu front-end
-app.use(express.static(path.join(__dirname, '../public')));
 
-// Rotas de API
-app.use('/api/kanaStats', require('./routes/kanaStats'));
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/kana', kanaRoutes);
+// CORS — usa SEMPRE o mesmo allowedOrigins
+const allowedOrigins = [
+  process.env.CLIENT_URL,    // produção
+  'http://localhost:5173',   // Vite dev
+  'http://localhost:3000',
+  'https://kanaquest-tau.vercel.app/'
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // libera Postman, Curl ou requests sem origin
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    callback(new Error(`Origem ${origin} não permitida pelo CORS`));
+  },
+  credentials: true
+}));
+
+// Serve front-end build (ajuste para 'dist' ou 'build' conforme seu setup)
+app.use(express.static(path.join(__dirname, '../dist')));
+
+// Rotas da API
+app.use('/api/auth',          authRoutes);
+app.use('/api/users',         userRoutes);
+app.use('/api/kana',          kanaRoutes);
 app.use('/api/userknownkana', userKnownKanaRoutes);
-app.use('/api/kanaattempts', kanaattemptsRoutes);
+app.use('/api/kanaattempts',  kanaAttemptsRoutes);
+app.use('/api/kanaStats',     kanaStatsRoutes);
 
-
-
-
-// Rota do jogo
-app.get('/game', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/game.html'));
+// Catch-all para a SPA
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '/dist/index.html'));
-});
-
-// Middleware de tratamento de erro
+// Tratamento de erros
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: err.message });
 });
 
+// Inicia o servidor
 app.listen(PORT, () => {
   console.log(`Server rodando na porta ${PORT}`);
 });
