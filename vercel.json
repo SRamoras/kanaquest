@@ -20,14 +20,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "frontend/$1"
+      "dest": "/"
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination ": "/"
-    }
-  
   ]
 }
