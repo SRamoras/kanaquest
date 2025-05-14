@@ -1,7 +1,7 @@
 // src/components/ImgComponent.jsx
 import React, { useRef, useEffect } from 'react';
 import './ImgComponent.css';
-import Img1 from '/images/img4.webp';
+import Img1 from '/images/img4.jpg';
 import Button from './atoms/Button.jsx';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
