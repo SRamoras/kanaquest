@@ -1,6 +1,6 @@
 // src/index.js
 
-require('dotenv').config();
+require('dotenv').config();                // Carrega variáveis do .env
 const express = require('express');
 const cors    = require('cors');
 const path    = require('path');
@@ -15,33 +15,32 @@ const kanaStatsRoutes     = require('./routes/kanaStats');
 const app  = express();
 const PORT = process.env.PORT || 5000;
 
-// Body parser
+// 1) Body parser
 app.use(express.json());
 
-// CORS — usa SEMPRE o mesmo allowedOrigins
+// 2) CORS dinâmico
 const allowedOrigins = [
-  process.env.CLIENT_URL,   
-  'http://localhost:5173',   
-  'http://localhost:3000',
-  'https://kanaquest-tau.vercel.app/'
+  process.env.CLIENT_URL,        // ex: http://localhost:3000 ou https://kanaquest-tau.vercel.app
+  'http://localhost:5173',       // Vite dev
+  'http://localhost:3000'        // CRA ou vercel dev --listen 3000
 ];
-
 app.use(cors({
   origin: (origin, callback) => {
-    // libera Postman, Curl ou requests sem origin
-    if (!origin) return callback(null, true);
+    if (!origin) return callback(null, true);             // Postman, curl, etc.
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
     callback(new Error(`Origem ${origin} não permitida pelo CORS`));
   },
-  credentials: true
+  credentials: true,
+  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization']
 }));
 
-// Serve front-end build (ajuste para 'dist' ou 'build' conforme seu setup)
+// 3) Serve arquivos estáticos do front-end (build em ../dist)
 app.use(express.static(path.join(__dirname, '../dist')));
 
-// Rotas da API
+// 4) Rotas da API
 app.use('/api/auth',          authRoutes);
 app.use('/api/users',         userRoutes);
 app.use('/api/kana',          kanaRoutes);
@@ -49,18 +48,18 @@ app.use('/api/userknownkana', userKnownKanaRoutes);
 app.use('/api/kanaattempts',  kanaAttemptsRoutes);
 app.use('/api/kanaStats',     kanaStatsRoutes);
 
-// Catch-all para a SPA
-app.get('*', (req, res) => {
+// 5) Catch-all para SPA (Express 5 exige RegExp ou parâmetro nomeado)
+app.get(/.*/, (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
-// Tratamento de erros
+// 6) Tratamento de erros
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: err.message });
 });
 
-// Inicia o servidor
+// 7) Start do servidor
 app.listen(PORT, () => {
   console.log(`Server rodando na porta ${PORT}`);
 });
