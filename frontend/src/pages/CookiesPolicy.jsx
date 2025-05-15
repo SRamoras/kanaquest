@@ -1,11 +1,11 @@
 // src/pages/CookiesPolicy.jsx
 import React from 'react';
-import './CookiesPolicy.css';
+import './DefaultPolicy.css';
 
 export default function CookiesPolicy() {
   return (
-    <div className="cookies-container">
-      <div className="cookies-header">
+    <div className="default-container">
+      <div className="default-header">
         <h1 className="heading-title">Cookies Policy</h1>
         <p>
           At Kana Quest ("we", "our"), we use cookies and similar technologies
@@ -13,7 +13,7 @@ export default function CookiesPolicy() {
         </p>
       </div>
 
-      <div className="cookies-section">
+      <div className="default-section">
         <h2>1. What Are Cookies?</h2>
         <p>
           Cookies are small text files placed on your device when you visit a website.
@@ -21,7 +21,7 @@ export default function CookiesPolicy() {
         </p>
       </div>
 
-      <div className="cookies-section">
+      <div className="default-section">
         <h2>2. How We Use Cookies</h2>
         <ul>
           <li>
@@ -36,7 +36,7 @@ export default function CookiesPolicy() {
         </ul>
       </div>
 
-      <div className="cookies-section">
+      <div className="default-section">
         <h2>3. Third-Party Cookies</h2>
         <p>
           We may allow third-party services (e.g., analytics providers) to set cookies
@@ -44,7 +44,7 @@ export default function CookiesPolicy() {
         </p>
       </div>
 
-      <div className="cookies-section">
+      <div className="default-section">
         <h2>4. Managing Cookies</h2>
         <p>
           You can manage or disable cookies through your browser settings. However,
@@ -53,7 +53,7 @@ export default function CookiesPolicy() {
         </p>
       </div>
 
-      <div className="cookies-section">
+      <div className="default-section">
         <h2>5. More Information</h2>
         <p>
           For questions about our Cookies Policy, please contact us at cookies@kanaquest.com.

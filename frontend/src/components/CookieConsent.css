@@ -1,0 +1,65 @@
+/* src/components/CookieConsent.css */
+.cookie-consent {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1%;
+
+  background: #fff;
+  border-radius:var(--radius);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  padding: 2rem 2.5rem;
+  max-width: 400px;
+  width: 90%;
+  font-family: "Manrope", sans-serif;
+  z-index: 1000;
+}
+
+.cookie-content p {
+  font-size: 1.1rem;
+  color: var(--clr-text);
+  margin-bottom: var(--spacing-md);
+  font-family: "Manrope", sans-serif;
+  font-weight: 300;
+ 
+}
+
+.cookie-buttons {
+  display: flex;
+  justify-content: start;
+  gap: 0.5rem;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn.accept {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn.decline {
+  background-color: #f44336;
+  color: white;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .cookie-consent {
+    bottom: 1rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .cookie-content p {
+    font-size: 0.85rem;
+  }
+
+  .btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}

@@ -1,5 +1,5 @@
 /* src/pages/CookiesPolicy.css */
-.cookies-container {
+.default-container {
   padding: 10%;
   margin: 2rem auto;
   font-family: "Manrope", sans-serif;
@@ -10,10 +10,10 @@
   gap: 30px;
 }
 
-.cookies-header {
+.default-header {
   margin-bottom: 2rem;
 }
-.cookies-header p {
+.default-header p {
   font-size: 1.525rem;
   color: var(--clr-text);
   margin-bottom: var(--spacing-md);
@@ -21,18 +21,18 @@
   font-weight: 300;
   width: 50vw;
 }
-.cookies-title {
+.default-title {
   font-size: 2rem;
   margin-bottom: 1rem;
 }
 
-.cookies-section {
+.default-section {
   margin-bottom: 1.5rem;
 }
-.cookies-header h1 {
+.default-header h1 {
   text-align: start;
 }
-.cookies-section h2 {
+.default-section h2 {
   font-size: 2.0rem;
   color: var(--clr-text);
   margin-bottom: var(--spacing-md);
@@ -41,7 +41,7 @@
   width: 50vw;
 }
 
-.cookies-section p {
+.default-section p {
   font-size: 1.525rem;
   color: var(--clr-text);
   margin-bottom: var(--spacing-md);
@@ -50,12 +50,41 @@
   width: 50vw;
 }
 
-.cookies-section ul {
+.default-section ul {
   list-style-type: disc;
   margin-left: 1.5rem;
   margin-bottom: 1rem;
 }
 
-.cookies-section ul li {
+.default-section ul li {
   margin-bottom: 0.5rem;
 }
+
+
+
+/* ===================== */
+/* Estilos responsivos   */
+/* ===================== */
+@media (max-width: 768px) {
+  .default-container {
+    padding: 8% 5%;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .default-title {
+    font-size: 1.75rem;
+  }
+
+  .default-header p,
+  .default-section h2,
+  .default-section p {
+    font-size: 1.25rem;
+    width: 100%;
+  }
+
+  .default-section ul {
+    margin-left: 1rem;
+  }
+}
+

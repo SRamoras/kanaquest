@@ -213,7 +213,10 @@
       align-items: center;
       min-width: 300px;
     }
-
+    .login-button-container{
+      min-width:auto;
+    
+    }
     .user-menu {
       min-width: 24px;
       display: flex;
