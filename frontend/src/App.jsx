@@ -14,7 +14,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import CookiesPolicy from './pages/CookiesPolicy';
 import TermsOfService from './pages/TermsOfService';
 import CookieConsent from './components/CookieConsent';  
-
+import NotFoundPage from './pages/NotFoundPage';
 import './index.css';
 
 const router = createBrowserRouter([
@@ -33,6 +33,7 @@ const router = createBrowserRouter([
       { path: 'privacy-policy', element: <PrivacyPolicy /> },
       { path: 'cookies-policy', element: <CookiesPolicy /> },
       { path: 'terms-of-service', element: <TermsOfService /> },
+      { path: '*', element: <NotFoundPage /> },
     ],
   },
 ]);
