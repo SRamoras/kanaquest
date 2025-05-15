@@ -10,19 +10,27 @@ import KanaTypingGame from './pages/KanaTypingGame';
 import ProfilePage from './pages/ProfilePage';
 import LearnPage from './pages/LearnPage';
 import './index.css';
-
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import CookiesPolicy from './pages/CookiesPolicy';
+import TermsOfService from './pages/TermsOfService';
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
     children: [
       { index: true, element: <MainPage /> },
+
+      { path: '', element: <LoginPage /> },
       { path: 'login', element: <LoginPage /> },
       { path: 'register', element: <SignupPage /> },
       { path: 'kana', element: <QuizPage /> },
       { path: 'quiz', element: <KanaTypingGame /> },
       { path: 'profile', element: <ProfilePage /> },
       { path: 'learn', element: <LearnPage /> },
+      { path: 'privacy-policy', element: <PrivacyPolicy /> },
+      { path: 'cookies-policy', element: <CookiesPolicy /> },
+          
+      { path: 'terms-of-service', element: <TermsOfService /> },
       // … outras rotas
     ],
   },

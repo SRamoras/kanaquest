@@ -8,7 +8,7 @@ export default function Footer({
   logoAlt = 'KanaQuest Logo',
   links = [
     { href: '/privacy-policy', label: 'Privacy policy' },
-     { href: '/terms-of-service', label: 'Terms of Coockies' },   { href: '/terms-of-service', label: 'Terms of Service' },
+     { href: '/cookies-policy', label: 'Terms of Coockies' },   { href: '/terms-of-service', label: 'Terms of Service' },
 
   ],
 

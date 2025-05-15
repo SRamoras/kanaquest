@@ -6,13 +6,39 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const testimonials = [
-  { id: 1, name: 'Ana Silva', role: 'CEO, Example Corp', quote: 'This product completely transformed how we manage our workflow. Highly recommend!' },
-  { id: 2, name: 'Carlos Pereira', role: 'CTO, Innovative Startup', quote: 'Incredible features and outstanding support. We couldn’t be happier.' },
-  { id: 3, name: 'Mariana Costa', role: 'Marketing Manager, Creative Agency', quote: 'Easy to use and delivers fast results. Excellent investment for our team.' },
-  { id: 4, name: 'João Santos', role: 'Head of Sales, Global Inc', quote: 'Our sales pipeline has never looked better. Fantastic tool.' },
-  { id: 5, name: 'Laura Mendes', role: 'Product Owner, Tech Solutions', quote: 'Great UX and support. Our team loves it.' }
+export const testimonials = [
+  {
+    id: 1,
+    name: 'John Doe',
+    role: 'Student',
+    quote: 'I learned Japanese kana easily and practiced daily with KanaQuest. It made mastering hiragana and katakana fun and effective!'
+  },
+  {
+    id: 2,
+    name: 'Emily Clark',
+    role: 'Language Enthusiast',
+    quote: 'KanaQuest helped me build confidence quickly. The interactive quizzes and clear lessons made learning kana a breeze.'
+  },
+  {
+    id: 3,
+    name: 'Michael Lee',
+    role: 'Traveler',
+    quote: 'Thanks to KanaQuest, I could read basic Japanese menus and signs on my trip. Learning kana was fast and enjoyable.'
+  },
+  {
+    id: 4,
+    name: 'Sophie Turner',
+    role: 'Anime Fan',
+    quote: 'Practicing with KanaQuest every day improved my listening and reading skills. Now I can follow dialogues in anime without subtitles.'
+  },
+  {
+    id: 5,
+    name: 'David Smith',
+    role: 'Newbie Learner',
+    quote: 'As a complete beginner, I was amazed at how quickly I picked up kana characters. KanaQuest’s step-by-step approach is top-notch.'
+  }
 ];
+
 
 const Testimonials = () => {
   const trackRef = useRef(null);
@@ -101,7 +127,7 @@ const Testimonials = () => {
       <div className="testimonials-header">
         <div className="testimonials-title" ref={titleRef}>
           <h2 className="heading-title">Testimonials</h2>
-          <p className="heading-text">What our clients say about us</p>
+          <p className="heading-text">What our users say about us</p>
         </div>
         <div className="testimonials-controls">
           <button

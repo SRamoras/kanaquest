@@ -1,0 +1,61 @@
+/* src/pages/TermsOfService.css */
+.tos-container {
+  padding: 10%;
+  margin: 2rem auto;
+  font-family: "Manrope", sans-serif;
+  color: #333;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.tos-header {
+  margin-bottom: 2rem;
+}
+.tos-header h1 {
+  text-align: start;
+}
+.tos-header p {
+  font-size: 1.525rem;
+  color: var(--clr-text);
+  margin-bottom: var(--spacing-md);
+  font-family: "Manrope", sans-serif;
+  font-weight: 300;
+  width: 50vw;
+}
+.tos-title {
+text-align: start;
+}
+
+.tos-section {
+  margin-bottom: 1.5rem;
+}
+
+.tos-section h2 {
+  font-size: 2.0rem;
+  color: var(--clr-text);
+  margin-bottom: var(--spacing-md);
+  font-family: "Manrope", sans-serif;
+  font-weight: 500;
+  width: 50vw;
+}
+
+.tos-section p {
+  font-size: 1.525rem;
+  color: var(--clr-text);
+  margin-bottom: var(--spacing-md);
+  font-family: "Manrope", sans-serif;
+  font-weight: 300;
+  width: 50vw;
+}
+
+.tos-section ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.tos-section ul li {
+  margin-bottom: 0.5rem;
+}

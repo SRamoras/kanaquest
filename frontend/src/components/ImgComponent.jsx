@@ -1,6 +1,7 @@
 // src/components/ImgComponent.jsx
 import React, { useRef, useEffect } from 'react';
 import './ImgComponent.css';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Img1 from '/images/img4.jpg';
 import Button from './atoms/Button.jsx';
 import { gsap } from 'gsap';
@@ -15,7 +16,7 @@ gsap.registerPlugin(ScrollTrigger);
  */
 const ImageComponent = () => {
   const wrapperRef = useRef(null);
-
+  const navigate = useNavigate();
   const title = 'Master Japanese Kana Effortlessly';
   const text = `Don't waste a second—dive into KanaQuest and transform your Japanese journey today! With interactive quizzes, mnemonic challenges, and progressive levels, mastering both hiragana and katakana has never been this engaging. Join our vibrant community, challenge your friends, and watch your skills soar to new heights!`;
 
@@ -97,7 +98,7 @@ const ImageComponent = () => {
         <h2 className="heading-title">{title}</h2>
         <p className="heading-text">{text}</p>
         <div className="button-container">
-          <Button variant="primary">
+          <Button variant="primary" onClick={() => navigate('/login')}>
             Start Your Journey
           </Button>
         </div>

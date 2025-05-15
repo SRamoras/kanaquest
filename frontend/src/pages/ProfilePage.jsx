@@ -112,7 +112,8 @@ export default function ProfilePage() {
   const charStats = Object.values(charMap).map(o => ({
     ...o,
     wrongPct: +(o.wrong / o.attempts * 100).toFixed(1),
-    rightPct: +((o.attempts - o.wrong) / o.attempts * 100).toFixed(1)
+    rightPct: +((o.attempts - o.wrong) / o.attempts * 100).toFixed(1),
+    right: o.attempts - o.wrong
   }));
 
   // Ordenações para tabelas
@@ -262,7 +263,7 @@ export default function ProfilePage() {
           <table className="pp-table">
             <thead>
               <tr>
-                <th>Kana</th><th>Attempts</th><th>Wrong</th><th>% Wrong</th><th>% Right</th>
+                <th>Kana</th><th>Attempts</th><th>Correct</th><th style={{color: "#44a340"}}>% Correct</th>
               </tr>
             </thead>
             <tbody>
@@ -270,8 +271,8 @@ export default function ProfilePage() {
                 <tr key={o.char}>
                   <td>{o.char}</td>
                   <td>{o.attempts}</td>
-                  <td>{o.wrong}</td>
-                  <td>{o.wrongPct}%</td>
+                  <td>{o.right}</td>
+       
                   <td>{o.rightPct}%</td>
                 </tr>
               ))}
@@ -286,7 +287,7 @@ export default function ProfilePage() {
           <table className="pp-table">
             <thead>
               <tr>
-                <th>Kana</th><th>Attempts</th><th>Wrong</th><th>% Wrong</th><th>% Right</th>
+                <th>Kana</th><th>Attempts</th><th>Wrong</th><th style={{color: "#cc0000"}}>% Wrong</th>
               </tr>
             </thead>
             <tbody>
@@ -296,7 +297,7 @@ export default function ProfilePage() {
                   <td>{o.attempts}</td>
                   <td>{o.wrong}</td>
                   <td>{o.wrongPct}%</td>
-                  <td>{o.rightPct}%</td>
+                 
                 </tr>
               ))}
             </tbody>

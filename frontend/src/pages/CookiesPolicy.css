@@ -1,0 +1,61 @@
+/* src/pages/CookiesPolicy.css */
+.cookies-container {
+  padding: 10%;
+  margin: 2rem auto;
+  font-family: "Manrope", sans-serif;
+  color: #333;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.cookies-header {
+  margin-bottom: 2rem;
+}
+.cookies-header p {
+  font-size: 1.525rem;
+  color: var(--clr-text);
+  margin-bottom: var(--spacing-md);
+  font-family: "Manrope", sans-serif;
+  font-weight: 300;
+  width: 50vw;
+}
+.cookies-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.cookies-section {
+  margin-bottom: 1.5rem;
+}
+.cookies-header h1 {
+  text-align: start;
+}
+.cookies-section h2 {
+  font-size: 2.0rem;
+  color: var(--clr-text);
+  margin-bottom: var(--spacing-md);
+  font-family: "Manrope", sans-serif;
+  font-weight: 500;
+  width: 50vw;
+}
+
+.cookies-section p {
+  font-size: 1.525rem;
+  color: var(--clr-text);
+  margin-bottom: var(--spacing-md);
+  font-family: "Manrope", sans-serif;
+  font-weight: 300;
+  width: 50vw;
+}
+
+.cookies-section ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.cookies-section ul li {
+  margin-bottom: 0.5rem;
+}

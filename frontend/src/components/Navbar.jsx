@@ -1,12 +1,11 @@
-// src/components/Navbar.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FiChevronDown, FiMenu, FiX } from 'react-icons/fi';
-import { jwtDecode } from 'jwt-decode';         // IMPORT CORRETO: default export
+import { jwtDecode } from 'jwt-decode';
 import './Navbar.css';
 import Button from './atoms/Button';
 import Logo from '/images/logo.png';
-import DefaultAvatar from '/images/default.jpg';
+import DefaultAvatar from '/images/avatarred.png';
 import api from '../services/api';
 
 export default function Navbar() {
@@ -41,7 +40,7 @@ export default function Navbar() {
     if (!user.token) return;
     let payload;
     try {
-      payload = jwtDecode(user.token); // usa default import
+      payload = jwtDecode(user.token);
     } catch {
       handleLogout();
       return;
@@ -66,36 +65,49 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setUser({ token: null, email: null });
-    navigate('/login');
-  };
-
-  const scrollToId = (id, offset = 0) => e => {
-    e.preventDefault();
+  // 4) Scroll condicional para "features"
+  const smoothScroll = (id, offset = 0) => {
     const el = document.getElementById(id);
     if (!el) return;
     const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
     window.scrollTo({ top, behavior: 'smooth' });
     window.history.pushState(null, '', `#${id}`);
+  };
+
+  useEffect(() => {
+    if (location.state?.scrollTo) {
+      smoothScroll(location.state.scrollTo, 120);
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, [location, navigate]);
+
+  const handleFeaturesClick = e => {
+    e.preventDefault();
     setMenuOpen(false);
+    if (location.pathname !== '/') {
+      navigate('/', { state: { scrollTo: 'features' } });
+    } else {
+      smoothScroll('features', 120);
+    }
   };
 
   const handleHomeClick = e => {
     if (location.pathname === '/') {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      setMenuOpen(false);
     }
+    setMenuOpen(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setUser({ token: null, email: null });
+    navigate('/login');
   };
 
   return (
     <header className="navbar">
       <div className="container">
-       
-
-        {/* Botão Hamburger */}
         <button
           className="menu-toggle"
           onClick={() => setMenuOpen(o => !o)}
@@ -106,22 +118,28 @@ export default function Navbar() {
 
         <nav className={`nav-links ${menuOpen ? 'open' : ''}`}>
           <Link to="/" onClick={handleHomeClick}>Home</Link>
-          <button className="nav-link-button" onClick={scrollToId('features', 120)}>
+          <button className="nav-link-button" onClick={handleFeaturesClick}>
             Features
           </button>
-          <Link to="/learn">Learn</Link>
-          <button className="nav-link-button" onClick={scrollToId('contact')}>
-            Contact
-          </button>
+          <Link to="/learn" onClick={() => setMenuOpen(false)}>Learn</Link>
+          <Link
+            to={user.token ? '/quiz' : '/login'}
+            onClick={() => setMenuOpen(false)}
+          >
+            Quiz
+          </Link>
         </nav>
+
         <Link to="/" onClick={handleHomeClick} className="logo-link">
           <img className="logo" src={Logo} alt="Kana Quest Logo" />
         </Link>
+
         {!user.token ? (
           <div className="login-button-container">
             <Button variant="primary" onClick={() => navigate('/login')}>
-            Start Now
-          </Button></div>
+              Start Now
+            </Button>
+          </div>
         ) : (
           <div className="user-menu" ref={dropdownRef}>
             <button className="user-button" onClick={() => setDropdownOpen(o => !o)}>
