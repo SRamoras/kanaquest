@@ -13,7 +13,7 @@ An interactive, full-stack journey to master the Japanese alphabets (Hiragana an
 ## 🚀 Live Demo
 
 Check out the project in action:  
-[Live Demo KanaQuest](https://your-domain.github.io/kanaquest/)
+[Live Demo KanaQuest](kanaquest-tau.vercel.app)
 
 ## 🛠️ Technologies & Tools
 
