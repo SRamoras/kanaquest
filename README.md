@@ -20,9 +20,7 @@ Check out the project in action:
 - **Frontend:**  
   - **React** – Main library for declarative UI.  
   - **Vite** – Ultra-fast build and optimized dev environment.  
-  - **TypeScript** – Static typing for added code robustness.  
-  - **React Router** – Navigation between screens (Quiz, Stats, About).  
-  - **Tailwind CSS** – Utility-first styling for quick, responsive design.  
+  - **React Router** – Navigation between screens (Quiz, Stats, About).
 
 - **Backend & APIs:**  
   - **Node.js + Express** – RESTful API server powering questions, user stats, and review data.  
