@@ -1,4 +1,4 @@
-![Imagem](public/images/readmeimg.png)
+![Imagem](frontend/public/images/readmeimg.png)
 # KanaQuest
 
 Uma jornada interativa para dominar os alfabetos japoneses (Hiragana e Katakana) de forma divertida e eficaz.
