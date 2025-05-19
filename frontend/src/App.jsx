@@ -2,6 +2,7 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+//pages
 import Layout from './components/layouts/Layout';
 import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
