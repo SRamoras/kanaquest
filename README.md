@@ -1,31 +1,31 @@
 ![Imagem](frontend/public/images/readmeimg.png)
 # KanaQuest
 
-Uma jornada interativa para dominar os alfabetos japoneses (Hiragana e Katakana) de forma divertida e eficaz.
+An interactive journey to master the Japanese alphabets (Hiragana and Katakana) in a fun and effective way.
 
-## 🎯 Objetivos do Projeto
+## 🎯 Project Goals
 
-- **Aprendizagem Gamificada:** Transformar o estudo de Kana em um jogo de perguntas e respostas com pontos e níveis de dificuldade.
-- **Feedback Imediato:** Mostrar ao usuário se a resposta está certa ou errada, com explicações rápidas.
-- **Progresso do Usuário:** Manter estatísticas de acertos, erros e tempo de resposta para acompanhar a evolução.
+- **Gamified Learning:** Turn Kana study into a quiz game with points and difficulty levels.
+- **Instant Feedback:** Let users know immediately whether their answer is correct or not, with quick explanations.
+- **User Progress Tracking:** Keep stats on correct answers, mistakes, and response times to monitor improvement.
 
-## 🚀 Demo Ao Vivo
+## 🚀 Live Demo
 
-Confira o projeto rodando em:  
-[Live Demo KanaQuest](https://seudominio.github.io/kanaquest/)
+Check out the project in action:  
+[Live Demo KanaQuest](https://your-domain.github.io/kanaquest/)
 
-## 🛠️ Tecnologias e Ferramentas
+## 🛠️ Technologies & Tools
 
-- **React** – Biblioteca principal para UI declarativa.  
-- **Vite** – Build ultra-rápido e ambiente de desenvolvimento otimizado.  
-- **TypeScript** – Tipagem estática para maior robustez do código.  
-- **React Router** – Navegação entre telas (Quiz, Estatísticas, Sobre).  
-- **Tailwind CSS** – Sistema de utilitários para estilização rápida e responsiva.  
-- **LocalStorage** – Armazenar progresso e estatísticas do usuário no navegador.  
+- **React** – Main library for declarative UI.  
+- **Vite** – Ultra-fast build and optimized dev environment.  
+- **TypeScript** – Static typing for added code robustness.  
+- **React Router** – Navigation between screens (Quiz, Stats, About).  
+- **Tailwind CSS** – Utility-first styling for quick, responsive design.  
+- **LocalStorage** – Store user progress and stats in the browser.
 
-## 📥 Instalação
+## 📥 Installation
 
-1. Clone o repositório  
+1. Clone the repository  
    ```bash
-   git clone https://github.com/seu-usuario/kanaquest.git
+   git clone https://github.com/your-username/kanaquest.git
    cd kanaquest
