@@ -21,15 +21,10 @@ Check out the project in action:
   - **React** – Main library for declarative UI.  
   - **Vite** – Ultra-fast build and optimized dev environment.  
   - **React Router** – Navigation between screens (Quiz, Stats, About).
+  - **GSAP (GreenSock Animation Platform)** – Library for creating advanced, high-performance animations.
+
 
 - **Backend & APIs:**  
   - **Node.js + Express** – RESTful API server powering questions, user stats, and review data.  
   - **Supabase** – Hosted Postgres database and auth layer for persisting user progress.  
   - **LocalStorage Fallback** – Caches progress in the browser when offline.
-
-## 📥 Installation
-
-1. **Clone the repository**  
-   ```bash
-   git clone https://github.com/your-username/kanaquest.git
-   cd kanaquest
