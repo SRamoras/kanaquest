@@ -1,6 +1,6 @@
 // src/index.js
 
-require('dotenv').config();                // Carrega variáveis do .env
+require('dotenv').config();             
 const express = require('express');
 const cors    = require('cors');
 const path    = require('path');
@@ -26,7 +26,7 @@ const allowedOrigins = [
 ];
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin) return callback(null, true);             // Postman, curl, etc.
+    if (!origin) return callback(null, true);           
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
